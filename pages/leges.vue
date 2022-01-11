@@ -31,7 +31,7 @@
                     <v-btn icon color="error" @click="show = !show"> <v-icon>mdi-close</v-icon></v-btn>
               </v-card-actions>
               <v-card-actions v-else>
-                    <v-btn small text color="error"> <v-icon>mdi-star</v-icon> Você errou/acertou</v-btn>
+                    <v-btn @click="resolution = !resolution" small text color="error"> <v-icon>mdi-star</v-icon> Você errou/acertou</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn icon color="error" @click="show = !show"> <v-icon>mdi-close</v-icon></v-btn>
               </v-card-actions>
