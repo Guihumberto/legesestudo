@@ -1,0 +1,16 @@
+query($id:ID!){
+  post(id:$id){
+    id
+    created_at
+    title
+    subtitle
+    text
+    subject{
+      name
+      abrev
+    }
+    tags{
+      name
+    }    
+  }
+}

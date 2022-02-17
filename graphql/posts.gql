@@ -1,0 +1,13 @@
+query{
+  posts(sort:"created_at:desc"){
+    id
+    created_at
+    title
+    subtitle
+    text
+    subject{
+      abrev
+      name
+    }
+  }
+}

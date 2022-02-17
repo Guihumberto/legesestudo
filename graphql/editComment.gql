@@ -1,0 +1,20 @@
+mutation(
+  $comments:String!
+  $id:ID!
+  $type:Int!
+){
+  updateComment(
+    input:{
+      where:{id:$id}
+      data:{
+        comments:$comments
+        type:$type
+      }
+    }
+  ){
+    comment{
+      id
+      comments
+    }
+  }
+}

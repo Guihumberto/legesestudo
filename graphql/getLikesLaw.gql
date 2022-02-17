@@ -1,0 +1,6 @@
+query($id:ID!){
+  law(id:$id){
+    id
+    likes
+  }
+}

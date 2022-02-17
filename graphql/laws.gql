@@ -1,0 +1,13 @@
+query {
+  laws(limit: 20){
+    id
+    name
+    nro_law
+    law
+		description
+    slug
+    subjects{
+      name
+    }
+  }
+}

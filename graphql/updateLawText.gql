@@ -1,0 +1,19 @@
+mutation(
+  $id:ID!
+  $law: ID!
+){
+  updateLawtext(
+    input:{
+      where:{id: $id} 
+    	data:{
+    		law:$law
+  		}
+    }
+  ){
+    lawtext{
+      id 
+      art
+      text
+    }     
+  }
+}

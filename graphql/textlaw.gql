@@ -1,0 +1,27 @@
+query (
+  $start:Int!
+  $limit:Int!
+  $law:ID!
+){
+  lawtexts(sort: "art:asc, org:asc", start: $start, limit: $limit, where: {law:{id:$law}}) {
+    id
+    art
+    text
+    show
+    org
+    revogado
+    questions{
+      id
+      textQuestion
+      response
+    }
+    comments{
+      id
+      comments
+      type
+      tags{
+        name
+      }
+    }
+  }
+}

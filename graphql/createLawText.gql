@@ -1,0 +1,24 @@
+mutation(
+  $art:Int!
+  $text:String
+  $law:ID!
+  $org:Int!
+  $structura:Boolean
+){
+  createLawtext(
+    input:{
+      data:{
+        art:$art
+        text:$text
+        law:$law
+        org:$org
+        structura:$structura
+      }
+    }
+  ){
+    lawtext{
+      id
+      art
+    }
+  }
+}

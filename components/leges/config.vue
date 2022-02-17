@@ -3,24 +3,65 @@
     flat
   >
     <v-card-text>
-      <v-row
-        justify="end"
-      >
-        <v-btn-toggle
-          v-model="toggle_exclusive"
-          dense
-        >
-          <v-btn disabled>{{fontSize}}</v-btn>
-          <v-btn @click="plusFont">
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-          <v-btn @click="minusFont">
-            <v-icon>mdi-minus</v-icon>
-          </v-btn>
-          <v-btn @click="noturno = !noturno">
-            <v-icon v-if="noturno">mdi-moon-new</v-icon> <v-icon v-else>mdi-moon-waxing-crescent</v-icon>
-          </v-btn>
-        </v-btn-toggle>
+      <v-row align-content="space-between">
+        <v-col cols="12" sm="6" md="5">
+          <v-text-field
+            append-icon="mdi-book-search-outline"
+            flat
+            dense
+            hide-details
+            label="Busca..."
+            prepend-inner-icon="mdi-magnify"
+            solo-inverted
+            v-model="search"
+            @keyup="searchEnv"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="6" sm="3" md="2">
+          <v-text-field
+            flat
+            dense
+            outlined
+            label="Artigo"
+            v-model="art"
+            type="number"
+            :rules="[rules.positive]"
+            @keyup="seletcArt"
+          >
+          </v-text-field>
+        </v-col>
+
+        <v-col cols="6" sm="3" md="2">
+          <v-select
+            flat
+            dense
+            hide-details
+            outlined
+            label="Disp. por pág"
+            v-model="dispositiveScreen"
+            :items="[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+            @input="artPerPage"
+          ></v-select>
+        </v-col>
+
+        <v-col cols="12" sm="12" md="3">
+          <v-btn-toggle
+            v-model="toggle_exclusive"
+            dense
+          >
+            <v-btn disabled>{{pagination.fontSizeProp}}</v-btn>
+            <v-btn @click="plusFont">
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+            <v-btn @click="minusFont">
+              <v-icon>mdi-minus</v-icon>
+            </v-btn>
+            <v-btn @click="noturno = !noturno">
+              <v-icon v-if="noturno">mdi-moon-new</v-icon> <v-icon v-else>mdi-moon-waxing-crescent</v-icon>
+            </v-btn>
+          </v-btn-toggle>
+        </v-col>
       </v-row>
     </v-card-text>
   </v-card>
@@ -31,20 +72,56 @@
     data () {
       return {
         toggle_exclusive: [],
-        fontSize: 12,
-        noturno: false
+        noturno: false,
+        search:"",
+        art: null,
+        rules: { positive: (v) => v > 0 || "Artigo Inválido",},
+      }
+    },
+    props:{
+      pagination: {required: false},
+      dispositiveScreen: {required: false}
+    },
+    computed:{
+      artEnv(){
+        if(this.art > 0){
+          return this.art
+        }
       }
     },
     methods:{
         plusFont(){
-          this.fontSize++
-          this.$emit('fontSize', this.fontSize)
+          this.pagination.fontSizeProp++
+          if(this.pagination.fontSizeProp < 5){
+            this.pagination.fontSizeProp = 5
+          }
+          this.$cookiz.set('page', {
+            fontSize: this.pagination.fontSizeProp
+          })
+          this.$emit('fontSize', this.pagination.fontSizeProp)
         },
         minusFont(){
-          this.fontSize--
-          this.$emit('fontSize', this.fontSize)
+          this.pagination.fontSizeProp--
+          if(this.pagination.fontSizeProp < 5){
+            this.pagination.fontSizeProp = 5
+          }
+          this.$cookiz.set('page', {
+            fontSize: this.pagination.fontSizeProp
+          })
+          this.$emit('fontSize', this.pagination.fontSizeProp)
         },
-      
+        searchEnv(){
+          this.$emit('search', this.search)
+        },
+        artPerPage(){
+          this.$cookiz.set('page', {
+            qdtArt: this.dispositiveScreen
+          })
+          this.$emit('artPerpage', this.dispositiveScreen)
+        },
+        seletcArt(){
+          this.$emit('seletcArt', this.art)
+        }
     }
   }
 </script>

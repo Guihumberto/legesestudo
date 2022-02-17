@@ -1,0 +1,19 @@
+mutation(
+  $identifier:String!
+  $email:String!
+  $password:String!
+){
+  register(
+    input:{
+      username:$identifier
+      email:$email
+      password:$password
+    }
+  ){
+    user{
+      id
+      username
+      email
+    }
+  }
+}

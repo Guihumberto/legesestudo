@@ -1,0 +1,21 @@
+mutation(
+  $id:ID!
+  $type:Int!
+  $comments:String!
+){
+  createComment(
+    input:{
+      data:{
+     			type:$type
+          lawtext:$id
+        	comments:$comments
+      }
+    }
+  ){
+     comment{
+      id
+    	comments
+      type
+    }
+  }
+}

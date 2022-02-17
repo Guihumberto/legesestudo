@@ -11,6 +11,14 @@
       width="100%"
     >
       <v-card-text>
+        <v-btn small text to="/">Home</v-btn>
+        <v-btn small text to="/blog">Blog</v-btn>
+        <v-btn small text to="/searchAll">Busca</v-btn>
+        <v-btn small text to="/about">Sobre</v-btn>
+        <v-btn small text to="/favorites" v-if="$auth.loggedIn">Favoritos</v-btn>
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-text>
         <v-btn
           v-for="icon in icons"
           :key="icon"
@@ -25,7 +33,8 @@
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — Leis para Concurso
+        {{ new Date().getFullYear() }} — SEFAZ SEARCH<br>
+        <v-btn x-small icon to="/about">João Humberto Silva Ribeiro Júnior</v-btn>
       </v-card-text>
     </v-card>
   </v-footer>

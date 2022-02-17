@@ -1,0 +1,10 @@
+query($id:ID!){
+  law(id:$id){
+    id
+    name
+    nro_law
+    law
+    description
+    likes
+  }
+}

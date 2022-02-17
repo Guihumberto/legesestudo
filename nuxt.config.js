@@ -18,17 +18,19 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/png', href: '/fav.png' }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    'animate.css/animate.min.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/vue2-filters'
+    '@/plugins/vue2-filters',
+    { src: '~/plugins/infiniteloading', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -42,7 +44,46 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/apollo',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    ['cookie-universal-nuxt', {alias: 'cookiz'}]
   ],
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'jwt',
+          type: 'Bearer'
+        },
+        user: {
+          property: false,
+        },
+        endpoints: {
+          login: { url: 'auth/local', method: 'post' },
+          logout: false,
+          user: { url: 'users/me', method: 'get' }
+        }
+      }
+    },
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/',
+      home: '/'
+    }
+  },
+  axios:{
+    baseURL:'https://strapi-leges-g7sfu.ondigitalocean.app/'
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'https://strapi-leges-g7sfu.ondigitalocean.app/graphql',
+      }
+    }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -65,5 +106,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+  // router:{
+  //   middleware:"initData"
+  // }
 }

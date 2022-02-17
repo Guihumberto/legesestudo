@@ -1,0 +1,10 @@
+query ($id:ID!){
+  user(id:$id){
+    favoritesLaw{
+      id
+      name
+      law
+      description
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <template>
     <v-breadcrumbs :items="items">
       <template v-slot:divider>
-        <v-icon>mdi-chevron-right</v-icon>
+        <v-icon>mdi-chevron-right</v-icon>{{law}}
       </template>
     </v-breadcrumbs>
 </template>
@@ -16,11 +16,15 @@
           to: '/',
         },
         {
-          text: 'Lei 5.172/1966',
           disabled: true,
           to: '/leges',
         },
       ],
     }),
+    props:{
+      law: {
+        require: true
+      }
+    },
   }
 </script>

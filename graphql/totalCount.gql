@@ -1,0 +1,8 @@
+query($id:ID!){
+  lawtextsConnection(where:{law:{id:$id}}){
+    aggregate{
+      count
+      totalCount   
+    }
+  }
+}
