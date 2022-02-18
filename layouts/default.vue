@@ -84,7 +84,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer" class="mr-2"></v-app-bar-nav-icon>
       <v-card width="1050" class="mx-auto" color="secondary" flat >
         <v-row>
-          <v-toolbar-title to="/"><v-btn to="/" text> <v-icon left dark> mdi-magnify-scan </v-icon> {{title}} </v-btn>  </v-toolbar-title>
+          <v-toolbar-title to="/"> {{title}} </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn to="/searchAll" text> <v-icon left dark> mdi-magnify </v-icon> busca </v-btn>
           <div v-if="$auth.loggedIn"> 
