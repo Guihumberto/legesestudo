@@ -67,21 +67,39 @@
                         let start = ["1)", "2)", "3)", "4)", "5)", "6)", "7)", "8)", "9)", "1-", "2-", "3-", "4-", "5-", "6-", "7-", "8-", "9-", "1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.", "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "Ar", "ar", "Ar", "ar", "§ ", "§1", "§2", "§3", "§4", "§5", "§6", "§7", "§8", "§9", "a)", "b)", "c)", "d)", "e)", "f)", "g)", "h)", "i)", "j)", "k)", "l)", "m)", "n)", "o)", "p)", "q)", "r)", "s)", "t)", "u)", "v)", "x)", "z)", "w)", "y)", "Pa", "Pa", "pa", "pa", "I-", "I ", "II ", "II", "IV", "V ", "VI", "VII", "VIII", "IX", "X ", "XI", "XV", "XX", "XL", "L ", "L-", "LI", "LV", "LX"]   
                         const titulo = ["livro", "títul", "titul", "capít", "capit", "seção", "seçao", "secça", "secçã", "subse"]
 
-                        if(!start.includes(this.lawdata.text.substr(0, 2))){
-
+            
+                        if(this.lawdata.text.toLowerCase().startsWith('livro') || this.lawdata.text.toLowerCase().startsWith('títul') || 
+                        this.lawdata.text.toLowerCase().startsWith('titul') || this.lawdata.text.toLowerCase().startsWith('capít') || 
+                        this.lawdata.text.toLowerCase().startsWith('capit') || this.lawdata.text.toLowerCase().startsWith('seção') || 
+                        this.lawdata.text.toLowerCase().startsWith('seçao') || this.lawdata.text.toLowerCase().startsWith('secça') || 
+                        this.lawdata.text.toLowerCase().startsWith('secçã') || this.lawdata.text.toLowerCase().startsWith('subse')
+                        ){
                             if(!this.lawdata.structura){
                                  this.lawdata.art ? this.lawdata.art++ : this.lawdata.art = 1
                             }
+                            
                             this.lawdata.structura = true
 
-                            if(titulo.includes(this.lawdata.text.toLowerCase().substr(0,5))){
-                                 title.push(this.lawdata.text)
-                            } else {
+                            title.push(this.lawdata.text)
+                        }
+                
+                        else if(!start.includes(this.lawdata.text.substr(0, 2))){                           
+ 
+                            if(title){
                                 title.push(this.lawdata.text)
                                 titleComplete = title.join(' - ')
-                            }
+                            } else {
+                                if(this.lawdata.text.toLowerCase().startsWith('disposição') || 
+                                this.lawdata.text.toLowerCase().startsWith('disposições')){
+                                    if(!this.lawdata.structura){
+                                        this.lawdata.art ? this.lawdata.art++ : this.lawdata.art = 1
+                                    }
+                                    titleComplete = this.lawdata.text
+                                    this.lawdata.structura = true
+                                }
+                            }    
 
-                            if(titleComplete.split('-').length == 2 && titleComplete.split('').includes('-')){
+                            if(titleComplete){
 
                                 this.lawdata.text = titleComplete
 
