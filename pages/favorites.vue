@@ -7,7 +7,13 @@
                 <v-list>
                     <v-list-item-group>
                         <template v-for="(fav, index) in favorites">
-                            <v-list-item :key="fav.id">
+                            <v-list-item :key="fav.id" 
+                            :to="{
+                                name: 'leges',
+                                params:{leges: false},
+                                query:{id:fav.id}  
+                                        }"
+                            >
                                 <template v-slot:default="{ active }">
                                     <v-list-item-content>
                                         <v-list-item-title>{{fav.name}}</v-list-item-title>
@@ -16,8 +22,8 @@
                                     </v-list-item-content>
                                     <v-list-item-action>
                                         <v-list-item-action-text></v-list-item-action-text>
-                                        <v-icon v-if="!active" color="grey lighten-1">mdi-star-outline</v-icon>
-                                        <v-icon v-else color="yellow darken-3">mdi-star</v-icon>
+                                        <v-icon v-if="!active" color="yellow darken-3">mdi-star</v-icon>
+                                        <v-icon v-else color="grey lighten-1">mdi-star-outline</v-icon>
                                     </v-list-item-action>
                                 </template>
                             </v-list-item>

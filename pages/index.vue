@@ -18,7 +18,7 @@
       <v-card class="mx-2 pb-2" flat color="cyan">
         <v-card-text v-if="!findLaw.length">
           <v-row>
-            <v-col cols="12" sm="6" md="6" lg="4" v-for="law in laws" :key="law.title">
+            <v-col cols="12" sm="6" md="6" lg="4" v-for="law in listLaws" :key="law.title">
               <v-hover v-slot="{ hover }">
                 <v-card height="250" hover
                     :title="law.name"
@@ -34,7 +34,8 @@
                       </v-col>
                       <v-col cols="2">
                         <v-btn icon @click="toggleFavorite" title="favoritar">
-                        <v-icon>mdi-star-outline</v-icon>
+                        <v-icon v-if="law.favSelect" color="yellow darken-3">mdi-star</v-icon>
+                        <v-icon v-else color="grey lighten-1">mdi-star-outline</v-icon>
                       </v-btn>
                       </v-col>
                     </v-row>      
@@ -91,12 +92,37 @@ export default {
   computed:{
     searchLawFiltred(){
       return this.laws.filter( law =>
-        law.nro_law.toLowerCase().match(this.findLaw.toLowerCase().replace(/[\[\].!'@,><|://\\;&*()_+=]/g, ""))
+        law.nro_law.replace(".", "").toLowerCase().match(this.findLaw.toLowerCase().replace(/[\[\].!'@,><|://\\;&*()_+=]/g, ""))
       )
     },
     favoriteLaws(){
       return this.$store.getters['user/favorites']
     },
+
+    favaritesIds(){
+      let favIds = []
+      if(this.favoriteLaws){
+        this.favoriteLaws.forEach((law)=>{
+        favIds.push(law.id)
+        })
+      }  
+      return favIds
+    },
+    listLaws(){
+      let favorite = []
+
+       this.laws.forEach((law)=>{
+         if(this.favaritesIds.includes(law.id)) {
+           law['favSelect'] = true
+           favorite.push(law) 
+         } else {
+           law['favSelect'] = false
+           favorite.push(law)
+         }
+      })
+
+      return favorite
+    }
   },
 
   methods:{

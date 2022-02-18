@@ -27,18 +27,20 @@
       <v-card-text>
           <div v-for="text in filtro" :key="text.id">
             <v-hover v-slot="{ hover }">
-              <div :style="revoked(text.text)" :id="text.id">
-                <p class="text-justify textLaw" :style="{ fontSize: pagination.fontSizeProp + 'px'}" v-if="!text.revogado" :title="`art ${text.art}º`">
-                  <v-badge v-show="text.questions.length > 0 || text.comments.length > 0" color="success" bordered left :content="text.questions.length" overlap>
-                  <v-btn x-small @click="text.show = !text.show" fab icon> <v-icon>mdi-message-reply-text</v-icon></v-btn></v-badge> <span v-html="text.text"> </span> 
-                  <v-avatar height="14" width="1" v-show="hover" v-if="$auth.loggedIn">
-                    <leges-cad :id="text.id" :commentList="text.comments" />
-                    <v-btn x-small icon title="favoritar" color="success"> 
-                        <v-icon v-if="true">mdi-star-plus-outline</v-icon> 
-                        <v-icon v-else>mdi-star</v-icon> 
-                    </v-btn>
-                  </v-avatar>
-                </p>
+              <div :class="text.structura ? 'structura':'none'">
+                <div :style="revoked(text.text)" :id="text.id">
+                  <p class="text-justify textLaw" :style="{ fontSize: pagination.fontSizeProp + 'px'}" v-if="!text.revogado" :title="`art ${text.art}º`">
+                    <v-badge v-show="text.questions.length > 0 || text.comments.length > 0" color="success" bordered left :content="text.questions.length" overlap>
+                    <v-btn x-small @click="text.show = !text.show" fab icon> <v-icon>mdi-message-reply-text</v-icon></v-btn></v-badge> <span v-html="text.text"> </span> 
+                    <v-avatar height="14" width="1" v-show="hover" v-if="$auth.user.id === 1">
+                      <leges-cad :id="text.id" :commentList="text.comments" />
+                      <v-btn x-small icon title="favoritar" color="success"> 
+                          <v-icon v-if="true">mdi-star-plus-outline</v-icon> 
+                          <v-icon v-else>mdi-star</v-icon> 
+                      </v-btn>
+                    </v-avatar>
+                  </p>
+                </div>
               </div>
             </v-hover>
             <transition name="question_2"
@@ -131,6 +133,7 @@ export default {
             lawtexts(sort: "art:asc, org:asc", where:{law:{id:$id}, text_contains:$search}, limit:5){
               id
                 art
+                structura
                 text
                 show
                 org
@@ -169,6 +172,7 @@ export default {
             ) {
               id
               art
+              structura
               text
               show
               org
@@ -341,14 +345,19 @@ export default {
         // if(this.$route.params.leges){
         //   return this.art = this.$route.params.leges
         // }
-        this.$route.params.leges
-        ? this.art = this.$route.params.leges
-        : this.art = null
+        // this.$route.params.leges
+        // ? this.art = this.$route.params.leges
+        // : this.art = null
   }
 }
 </script>
 
 <style scoped>
+.structura{
+  text-transform: uppercase;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
 .textLaw{
   font-family: 'Century Gothic', Courier, monospace;
   line-height: 1.7;
