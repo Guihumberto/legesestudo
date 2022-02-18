@@ -156,7 +156,7 @@ export default {
   // middleware:"initData",
   data () {
     return {
-      title: 'Estudo da Lei',
+      title: 'Leges',
       dialog: false,
       snack: false,
       loginmenu: false,
