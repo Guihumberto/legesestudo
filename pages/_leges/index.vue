@@ -32,12 +32,8 @@
                   <p class="text-justify textLaw" :style="{ fontSize: pagination.fontSizeProp + 'px'}" v-if="!text.revogado" :title="`art ${text.art}º`">
                     <v-badge v-show="text.questions.length > 0 || text.comments.length > 0" color="success" bordered left :content="text.questions.length" overlap>
                     <v-btn x-small @click="text.show = !text.show" fab icon> <v-icon>mdi-message-reply-text</v-icon></v-btn></v-badge> <span v-html="text.text"> </span> 
-                    <v-avatar height="14" width="1" v-show="hover" v-if="$auth.user.id === 1">
-                      <leges-cad :id="text.id" :commentList="text.comments" />
-                      <v-btn x-small icon title="favoritar" color="success"> 
-                          <v-icon v-if="true">mdi-star-plus-outline</v-icon> 
-                          <v-icon v-else>mdi-star</v-icon> 
-                      </v-btn>
+                    <v-avatar height="14" width="1" v-show="hover" v-if="$auth.loggedIn" >
+                      <leges-menuInception />
                     </v-avatar>
                   </p>
                 </div>

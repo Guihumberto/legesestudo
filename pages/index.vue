@@ -34,8 +34,10 @@
                       </v-col>
                       <v-col cols="2">
                         <v-btn icon @click="toggleFavorite" title="favoritar">
-                        <v-icon v-if="law.favSelect" color="yellow darken-3">mdi-star</v-icon>
-                        <v-icon v-else color="grey lighten-1">mdi-star-outline</v-icon>
+                        <div v-if="$auth.loggedIn">
+                          <v-icon v-if="law.favSelect" color="yellow darken-3">mdi-star</v-icon>
+                          <v-icon v-else color="grey lighten-1">mdi-star-outline</v-icon>
+                        </div>   
                       </v-btn>
                       </v-col>
                     </v-row>      

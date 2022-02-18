@@ -14,7 +14,7 @@
           color="purple"
           v-bind="attrs"
           v-on="on"
-        ><v-icon small>mdi-frequently-asked-questions</v-icon>
+        ><v-icon small>mdi-pen-plus</v-icon>
         </v-btn>
 
       </template>
