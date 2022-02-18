@@ -68,7 +68,7 @@
     export default {
        data(){
            return{
-               panel: [0, 1],
+               panel: false,
                filter: {
                    searchFieldWord:"",
                    fieldCheck:[]

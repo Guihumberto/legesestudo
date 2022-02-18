@@ -20,7 +20,7 @@
           <v-row>
             <v-col cols="12" sm="6" md="6" lg="4" v-for="law in laws" :key="law.title">
               <v-hover v-slot="{ hover }">
-                <v-card height="230" hover
+                <v-card height="250" hover
                     :title="law.name"
                     :to="{
                     name: 'leges',
@@ -39,7 +39,8 @@
                       </v-col>
                     </v-row>      
                   </v-card-title>
-                  <v-card-subtitle>{{law.nro_law}}</v-card-subtitle>
+                  <v-card-subtitle> {{law.nro_law}} <br> {{law.name}}</v-card-subtitle>
+                  
                   <v-card-text class="text-justify">{{law.description | truncate(110)}}</v-card-text>
                   <v-card-text class="text-justify">
                     <v-chip-group column>

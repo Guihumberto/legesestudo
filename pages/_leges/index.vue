@@ -351,7 +351,10 @@ export default {
 <style scoped>
 .textLaw{
   font-family: 'Century Gothic', Courier, monospace;
-  line-height: 1.7
+  line-height: 1.7;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 .art{
