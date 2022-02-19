@@ -24,7 +24,7 @@
                     :title="law.name"
                     :to="{
                     name: 'leges',
-                    params:{leges: false},
+                    params:{leges: law.name},
                     query:{id:law.id}  
                   }">
                   <v-card-title> 
@@ -92,6 +92,9 @@ export default {
   },
 
   computed:{
+    laws(){
+      return this.$store.getters.readLaws
+    },
     searchLawFiltred(){
       return this.laws.filter( law =>
         law.nro_law.replace(".", "").toLowerCase().match(this.findLaw.toLowerCase().replace(/[\[\].!'@,><|://\\;&*()_+=]/g, ""))
@@ -100,7 +103,6 @@ export default {
     favoriteLaws(){
       return this.$store.getters['user/favorites']
     },
-
     favaritesIds(){
       let favIds = []
       if(this.favoriteLaws){
@@ -112,17 +114,18 @@ export default {
     },
     listLaws(){
       let favorite = []
-
-       this.laws.forEach((law)=>{
-         if(this.favaritesIds.includes(law.id)) {
-           law['favSelect'] = true
-           favorite.push(law) 
-         } else {
-           law['favSelect'] = false
-           favorite.push(law)
-         }
-      })
-
+      
+      if(this.laws){
+          this.laws.forEach((law)=>{
+            if(this.favaritesIds.includes(law.id)) {
+              law['favSelect'] = true
+              favorite.push(law) 
+            } else {
+              law['favSelect'] = false
+              favorite.push(law)
+            }
+          })
+      }
       return favorite
     }
   },
@@ -132,20 +135,7 @@ export default {
       this.favLaw = !this.favLaw
     }
   },
-  async asyncData(context){
-    const client = context.app.apolloProvider.defaultClient
-    
-    const query = {
-      query:require("../graphql/laws.gql")
-    }
 
-    let laws = []
-    await client.query(query).then(data => {
-      laws = data.data.laws
-    })
-
-    return{ laws }
-  },
   async mounted(){
     if(this.$store.getters['user/favorites'] == null){
       console.log("favorites")

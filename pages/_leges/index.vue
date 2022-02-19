@@ -24,7 +24,7 @@
         <leges-pagination v-show="!findDispositive" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount"/>
       </div>
 
-      <v-card-text>
+      <v-card-text v-if="false">
           <div v-for="text in filtro" :key="text.id">
             <v-hover v-slot="{ hover }">
               <div :class="text.structura ? 'structura':'none'">
@@ -48,6 +48,8 @@
             </transition>
           </div>
       </v-card-text>
+
+      <leges-textLaw />
 
       <div v-show="!findDispositive">
         <leges-pagination v-show="!art" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount" @onTopPage="topPage($event)" />
@@ -216,6 +218,16 @@ export default {
         law.text.toLowerCase().match(this.findDispositive.toLowerCase().replace(/[\[\].!'@,><|://\\;&*()_+=]/g, ""))
       )
     },
+    infolaw(){
+      let laws = this.$store.getters.readLaws
+      let lawSelect = ''
+      laws.forEach(law => {
+        if(law.id == this.idLaw){
+          lawSelect = law
+        }
+      })
+      return lawSelect
+    },
     userFavoritesLaw(){
       return this.$store.getters['user/favorites']
     },
@@ -250,10 +262,10 @@ export default {
     const client = app.apolloProvider.defaultClient
     let id = route.query.id
     
-    const query = {
-      query:require("../../graphql/lawSingle.gql"),
-      variables:{id}
-    }
+    // const query = {
+    //   query:require("../../graphql/lawSingle.gql"),
+    //   variables:{id}
+    // }
 
     const qry = {
       query:require("../../graphql/totalCount.gql"),
@@ -265,12 +277,12 @@ export default {
       totalCount = data.data.lawtextsConnection.aggregate.count
     })
 
-    let infolaw = []
-    await client.query(query).then(data => {
-      infolaw = data.data.law
-    })
+    // let infolaw = []
+    // await client.query(query).then(data => {
+    //   infolaw = data.data.law
+    // })
 
-    return{ infolaw, totalCount }
+    return{ totalCount }
   },
 
   methods: {

@@ -1,0 +1,11 @@
+query($id: ID!) {
+  lawtexts(
+    sort: "art:asc, org:asc"
+    where: { law: { id: $id } }
+  ) {
+    id
+    art
+    text
+    structura
+  }
+}

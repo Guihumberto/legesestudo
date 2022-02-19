@@ -1,29 +1,37 @@
 export const strict = false
 
 export const state = () => ({
-    counter: 0,
-    favorites: "sim"
+    laws: []
 })
 
 export const getters = {
-    readCounter(state){
-        return state.counter
-    },
-    favorites(state){
-        return state.favorites
+    readLaws(state){
+        return state.laws
     },
 }
 
 export const mutations = {
-    increment(state){
-        state.counter++
+    addLaws(state, payload){
+        state.laws = payload
     }
 }
 
 export const actions = {
-    increment(context){
-        setTimeout(()=>{
-            context.commit("increment")
-        }, 1000)
-    }
+    async nuxtServerInit({commit}){
+        console.log("Hola Nuxt Server Init")
+        // return new Promise((resolve, reject) => {
+            const client = this.app.apolloProvider.defaultClient
+            const query = {
+                query:require("../graphql/laws.gql")
+            }
+
+            await client.query(query).then(data => {
+                commit('addLaws', data.data.laws)
+                // resolve()
+            }).catch(error => {
+                console.log(error)
+                // reject()
+            })
+        // })
+    },
 }

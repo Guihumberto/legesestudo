@@ -1,5 +1,5 @@
 query {
-  laws(limit: 20){
+  laws(limit: 50){
     id
     name
     nro_law

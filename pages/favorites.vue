@@ -10,10 +10,9 @@
                             <v-list-item :key="fav.id" 
                             :to="{
                                 name: 'leges',
-                                params:{leges: false},
+                                params:{leges: fav.name},
                                 query:{id:fav.id}  
-                                        }"
-                            >
+                                }">
                                 <template v-slot:default="{ active }">
                                     <v-list-item-content>
                                         <v-list-item-title>{{fav.name}}</v-list-item-title>
@@ -27,7 +26,7 @@
                                     </v-list-item-action>
                                 </template>
                             </v-list-item>
-                            <v-divider v-if="index < favorites.length - 1" :key="index"></v-divider>
+                            <v-divider v-if="index < favorites.length - 1" :key="Math.random(index)"></v-divider>
                         </template>
                     </v-list-item-group>
                 </v-list>
