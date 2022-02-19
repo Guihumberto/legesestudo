@@ -55,7 +55,7 @@
         
               <v-hover v-slot="{ hover }">
                 <v-card
-                  class="mx-auto pt-2"
+                  class="mx-auto"
                   color="grey lighten-4"
                   max-width="600"
                   height="380"
@@ -82,7 +82,7 @@
                   </v-img>
                   </nuxt-link>
                   <v-card-text
-                    class="pt-4 mt-2 textContainer"
+                    class="pt-4 textContainer"
                     style="position: relative;"
                   >
                     <v-btn fab absolute right top @click="toggleFavorite(law)" title="favoritar">
@@ -93,17 +93,15 @@
                           <div v-else>
                             <v-icon color="gray">mdi-star-outline</v-icon>
                           </div>   
-                        </v-btn>
-                    <div>
-                      <div class="font-weight-light grey--text text-h6 mb-2">
-                        {{law.nro_law}}
-                      </div>
-                      <h3 class="text-h6 font-weight-light orange--text mb-2">
-                        {{law.name | truncate(30)}}
-                      </h3>
-                      <div class="font-weight-light text-h7 mb-2 text-justify">
-                        {{law.description | truncate(80)}}
-                      </div>
+                    </v-btn>
+                    <div class="font-weight-light grey--text text-h6 mb-2">
+                      {{law.nro_law}}
+                    </div>
+                    <h3 class="text-h6 font-weight-light orange--text mb-2">
+                      {{law.name | truncate(30)}}
+                    </h3>
+                    <div class="font-weight-light text-h7 mb-2 text-justify">
+                      {{law.description | truncate(80)}}
                     </div>
                   </v-card-text>
                 </v-card>
@@ -266,6 +264,5 @@ export default {
 }
 .textContainer{
   background-color: rgba(228, 228, 238, 0.5);
-  margin: 0;
 }
 </style>
