@@ -6,8 +6,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - leges_estudo',
-    title: 'leges_estudo',
+    titleTemplate: '%s - Estudo da Lei',
+    title: 'Estudo da Lei',
     htmlAttrs: {
       lang: 'en'
     },
