@@ -24,7 +24,7 @@
         <leges-pagination v-show="!findDispositive" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount"/>
       </div>
 
-      <v-card-text v-if="false">
+      <v-card-text>
           <div v-for="text in filtro" :key="text.id">
             <v-hover v-slot="{ hover }">
               <div :class="text.structura ? 'structura':'none'">
@@ -48,8 +48,6 @@
             </transition>
           </div>
       </v-card-text>
-
-      <leges-textLaw />
 
       <div v-show="!findDispositive">
         <leges-pagination v-show="!art" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount" @onTopPage="topPage($event)" />
