@@ -33,7 +33,7 @@
                     <v-badge v-show="text.questions.length > 0 || text.comments.length > 0" color="success" bordered left :content="text.questions.length" overlap>
                     <v-btn x-small @click="text.show = !text.show" fab icon> <v-icon>mdi-message-reply-text</v-icon></v-btn></v-badge> <span v-html="text.text"> </span> 
                     <v-avatar height="14" width="1" v-show="hover" v-if="$auth.loggedIn" >
-                      <leges-menuInception />
+                      <leges-menuInception :commentList="text.comments" :id="text.id" :textData="text" />
                     </v-avatar>
                   </p>
                 </div>
@@ -102,6 +102,15 @@ export default {
                   id
                   textQuestion
                   response
+                  question_info{
+                    institute
+                    office
+                    year
+                    organizadora{
+                      name
+                    }
+                    area
+                  }
                 }
                 comments{
                   id
@@ -138,6 +147,15 @@ export default {
                   id
                   textQuestion
                   response
+                  question_info{
+                    institute
+                    office
+                    year
+                    organizadora{
+                      name
+                    }
+                    area
+                  }
                 }
                 comments{
                   id
@@ -177,6 +195,15 @@ export default {
                 id
                 textQuestion
                 response
+                question_info{
+                    institute
+                    office
+                    year
+                    organizadora{
+                      name
+                    }
+                    area
+                  }
               }
               comments {
                 id

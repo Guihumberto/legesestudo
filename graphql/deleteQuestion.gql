@@ -1,0 +1,11 @@
+mutation($id:ID!){
+  deleteQuestion(
+    input:{
+      where:{id:$id}
+    }
+  ){
+    question{
+      id
+    }
+  }
+}

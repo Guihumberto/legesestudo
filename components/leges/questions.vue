@@ -10,23 +10,20 @@
                   <v-tab-item v-if="textquestions.length > 0">
                     <v-card>
                       <v-card-text>
-                            <v-alert
-                              dense
-                              type="info"
-                              class="mt-2"
-                              outlined
-                            >
-                              Analista Tributário - Receita Federal - 2012 - <strong>CESPE</strong>
+                            <v-alert dense type="info" class="mt-2" outlined>
+                            {{questions.question_info.office}} - {{questions.question_info.institute}} - {{questions.question_info.year}} - <strong>{{questions.question_info.organizadora.name}}</strong>
                             </v-alert>
                             <p :style="{ fontSize: fontSizeProp + 'px'}" class="text-justify textQuestions">
-                            {{questions.textQuestion}}     
+                            {{questions.textQuestion}}
                             </p>
                             <v-card-actions v-if="resolution">
-                                <v-btn small color="success" @click="resolution = !resolution">Certo</v-btn>
-                                <v-btn small outlined color="success" @click="resolution = !resolution">Errado</v-btn>
+                                <v-btn small color="success" @click="resolutionClick(true, questions.response)">Certo</v-btn>
+                                <v-btn small outlined color="success" @click="resolutionClick(false, questions.response)">Falso</v-btn>
                             </v-card-actions>
                             <v-card-actions v-else>
-                                  <v-btn @click="resolution = !resolution" small text color="error"> <v-icon>mdi-star</v-icon> Você errou/acertou</v-btn>
+                                  <v-btn @click="resolution = !resolution" small text :color="texteResponseChoice == 'Resposta Correta' ? 'success':'error'"> 
+                                    <v-icon>{{texteResponseChoice == 'Resposta Correta' ? 'mdi-check' : 'mdi-close'}}</v-icon> {{texteResponseChoice}}
+                                  </v-btn>
                             </v-card-actions>
                             <v-card-actions class="text-center mb-2">
                             </v-card-actions>
@@ -38,10 +35,10 @@
                                 <v-btn @click="next" icon> <v-icon>mdi-arrow-right-drop-circle-outline</v-icon> </v-btn>
                               </v-col>
                             </v-row>
-                            
                       </v-card-text>
                     </v-card>
                   </v-tab-item>
+
                   <v-tab-item v-if="textcomments.length > 0">
                     <v-card>
                       <v-card-text v-for="comments in textcomments" :key="comments.comments">
@@ -60,6 +57,7 @@
                       </v-card-text>
                     </v-card>
                   </v-tab-item>
+
                 </v-tabs-items>      
                 <v-card-actions class="text-center mb-2">
                   <v-spacer></v-spacer>
@@ -76,6 +74,8 @@ export default {
              page: 1,
              resolution: true,
              fontSizeProp: 15,
+             questionsComents: [],
+             texteResponseChoice: '',
              pagination:{
                page: 1, 
                perpage: 1,
@@ -98,6 +98,7 @@ export default {
             this.$emit('close', false)
         },
         next(){
+          this.resolution = true
           this.pagination.page++
           this.pagination.pageIndex++
           if(this.pagination.page > this.textquestions.length) {
@@ -106,13 +107,35 @@ export default {
           }
         },
         prev(){
+          this.resolution = true
           this.pagination.page--
           this.pagination.pageIndex--
           if(this.pagination.page < 1) {
             this.pagination.page++
             this.pagination.pageIndex++
           }
+        },
+        resolutionClick(choice, response){
+          this.resolution = false
+          if(choice == response){
+            this.texteResponseChoice = "Resposta Correta"
+          }else{
+            this.texteResponseChoice = "Resposta Errada."
+          }
         }
-    }
+    },
+    // async fetch(){
+    //   const client = this.$apollo.getClient()
+    //   const id = 668
+    //   const query = {
+    //     query: require("../../graphql/questionsSingleTextLaw.gql"),
+    //     variables:{id}
+    //   }
+
+    //   await client.query(query).then(data => {
+    //     console.log(data)
+    //     this.questionsComents = data.data.lawtext
+    //   })
+    // }
 }
 </script>

@@ -14,7 +14,7 @@
           color="purple"
           v-bind="attrs"
           v-on="on"
-        ><v-icon small>mdi-pen-plus</v-icon>
+        ><v-icon small>mdi-frequently-asked-questions</v-icon>
         </v-btn>
 
       </template>
@@ -23,73 +23,62 @@
             <v-form @submit.prevent="onsubmit" ref="form">
             <v-toolbar
               color="primary"
-              dark
-            >Cadastrar Comentários</v-toolbar>
+              dark>Cadastrar Questões</v-toolbar>
+              <v-card-subtitle :title="textData.art"><span v-html="textData.text"></span> </v-card-subtitle>
                 <v-card-text>
                     <v-container>
                         <v-row>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                        >
-                            <v-select
-                            :items="['', 1, 2, 3, 4]"
-                            label="Comentário"
-                            required
-                            v-model="comments.type"
-                            :rules="[rules.required]"
-                            ></v-select>
-                        </v-col>
-                        <v-col cols="12">
-                            <v-textarea
-                            label="Comentários"
-                            required
-                            dense
-                            outlined
-                            v-model="comments.comments"
-                            :rules="[rules.required]"
-                            ></v-textarea>
-                        </v-col>
+                          <v-col cols="12">
+                              <v-textarea
+                              label="Texto da Questão"
+                              required
+                              dense
+                              outlined
+                              v-model="questions.question"
+                              :rules="[rules.required]"
+                              ></v-textarea>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-radio-group v-model="questions.response">
+                              <v-radio
+                                label="Verdadeiro"
+                                :value="response"
+                              ></v-radio>
+                              <v-radio
+                                label="Falso"
+                                :value="!response"
+                              ></v-radio>
+                            </v-radio-group>    
+                          </v-col>
                         </v-row>
                     </v-container>
-                    </v-card-text>
+                </v-card-text>
                     <v-card-actions class="justify-end mr-5">
-                        <v-btn
-                            small
-                            color="success"
-                            type="submit"
-                        >Salvar
-                        </v-btn>
-                        <v-btn
-                            small
-                            color="success"
-                            outlined
-                            @click="dialog.value = false"
-                        >Cancelar</v-btn>
+                        <v-btn small color="success" type="submit">Salvar</v-btn>
+                        <v-btn small color="success" outlined @click="dialog.value = false">Cancelar</v-btn>
                     </v-card-actions>
             </v-form>
             <v-card-text>
               <v-list dense>
-                <v-subheader>COMENTÁRIOS CADASTRADOS</v-subheader>
+                <v-subheader>QUESTÕES CADASTRADAS</v-subheader>
                 <v-list-item-group
                   v-model="selectedItem"
                   color="primary"
                 >
                   <v-list-item
-                    v-for="(item, i) in commentList"
+                    v-for="(item, i) in textData.questions"
                     :key="i"
                   >
                     <v-list-item-icon>
-                      <v-icon v-text="item.type"></v-icon>
+                      <v-icon v-text="item.response"></v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title v-text="item.comments"></v-list-item-title>
+                      <v-list-item-title v-text="item.textQuestion"></v-list-item-title>
                     </v-list-item-content>
                     <v-list-item-action>
                       <v-row align="center" justify="center">
-                        <leges-editComment :comment="item" @comment="editComment($event)" />
-                        <leges-deleteComment @choice="deleteComment($event, item.id)" />
+                        <leges-editComment :comment="item" @comment="editQuestion($event)" />
+                        <leges-deleteComment @choice="deleteQuestion($event, item.id)" />
                       </v-row>
                     </v-list-item-action>
                   </v-list-item>
@@ -107,19 +96,17 @@
     data () {
       return {
         dialog: false,
-        comments:{
-          comments: "",
-          type: "",
+        response: true,
+        questions:{
+          question: "",
+          response: null,
         },
         rules: { required: (value) => !!value || "Este campo é obrigatório"}, 
         selectedItem: 1,
       }
     },
     props:{
-      id: {
-        required: true
-      },
-      commentList:{
+      textData: {
         required: true
       },
     },
@@ -127,46 +114,39 @@
       onsubmit(){
         if (this.$refs.form.validate()) {
 
-            this.comments["id"] = this.id
+            this.questions["id"] = parseInt(this.textData.id)
 
             this.dialog = false
 
             this.$apollo.mutate({
-            mutation:require('../../graphql/createComments.gql'),
-            variables: this.comments,
+            mutation:require('../../graphql/createQuestion.gql'),
+            variables: this.questions,
             })
             .then(data => {
                 console.log(data)
-                this.commentList.push(this.comments)
-                this.comments = []
+                this.textData.questions.push(this.questions)
+                this.questions = []
             })
             .catch( e => {
                 console.log(e)
             })
         }
       },
-      deleteComment(choice, id){
+      deleteQuestion(choice, id){
         if(choice){
           this.$apollo.mutate({
-            mutation:require('../../graphql/deleteComment.gql'),
+            mutation:require('../../graphql/deleteQuestion.gql'),
             variables:{id}
           }).then(res => {
-            console.log("item apagado")
-            const idComment = this.commentList.find(comment => comment.id == id)
-            const index = this.commentList.indexOf(idComment)
-            this.commentList.splice(index, 1)
+            console.log("Questao apagada")
+            const idQuestion = this.textData.questions.find(question => question.id == id)
+            const index = this.textData.questions.indexOf(idQuestion)
+            this.textData.questions.splice(index, 1)
           })
         }
       },
-      editComment(comment){
-        if(comment){
-          this.$apollo.mutate({
-            mutation:require('../../graphql/editComment.gql'),
-            variables:{comment}
-          }).then((data) => {
-          console.log(data)
-          })
-        }
+      editQuestion(){
+        console.log("editar questao")
       }
     }
   }

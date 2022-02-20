@@ -1,0 +1,21 @@
+mutation(
+  $id:ID!
+  $response:Boolean!
+  $question:String!
+){
+  createQuestion(
+    input:{
+      data:{
+     			response:$response
+          lawtext:$id
+        	textQuestion:$question
+      }
+    }
+  ){
+     question{
+      id
+    	textQuestion
+      response
+    }
+  }
+}

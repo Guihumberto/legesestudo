@@ -43,14 +43,14 @@
         <v-list>
           <v-list-item>
             <v-list-item-action>
-              <leges-cadQuestions />
+              <leges-cadQuestions :textData="textData" />
             </v-list-item-action>
             <v-list-item-title>Inserir Questões</v-list-item-title>
           </v-list-item>
 
           <v-list-item v-if="$auth.user.id === 1">
             <v-list-item-action>
-              <leges-cad />
+              <leges-cad :commentList="commentList" :id="id" />
             </v-list-item-action>
             <v-list-item-title>Inserir Comentários</v-list-item-title>
           </v-list-item>
@@ -79,5 +79,16 @@
       message: false,
       hints: true,
     }),
+    props:{
+      textData:{
+        required: true
+      },
+      commentList:{
+        required:false
+      },
+      id:{
+        required:true
+      }
+    }
   }
 </script>

@@ -23,16 +23,11 @@
             <v-form @submit.prevent="onsubmit" ref="form">
             <v-toolbar
               color="primary"
-              dark
-            >Cadastrar Comentários</v-toolbar>
+              dark>Cadastrar Comentários</v-toolbar>
                 <v-card-text>
                     <v-container>
                         <v-row>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                        >
+                        <v-col cols="12" sm="6" md="4">
                             <v-select
                             :items="['', 1, 2, 3, 4]"
                             label="Comentário"
@@ -53,20 +48,10 @@
                         </v-col>
                         </v-row>
                     </v-container>
-                    </v-card-text>
+                </v-card-text>
                     <v-card-actions class="justify-end mr-5">
-                        <v-btn
-                            small
-                            color="success"
-                            type="submit"
-                        >Salvar
-                        </v-btn>
-                        <v-btn
-                            small
-                            color="success"
-                            outlined
-                            @click="dialog.value = false"
-                        >Cancelar</v-btn>
+                        <v-btn small color="success" type="submit">Salvar</v-btn>
+                        <v-btn small color="success" outlined @click="dialog.value = false">Cancelar</v-btn>
                     </v-card-actions>
             </v-form>
             <v-card-text>
@@ -120,7 +105,7 @@
         required: true
       },
       commentList:{
-        required: true
+        required: false
       },
     },
     methods:{

@@ -1,0 +1,25 @@
+query($id:ID!){
+  lawtext(id:$id){
+    id:id
+    text
+    comments{
+      comments
+      type 
+    }
+    questions{
+      id
+      textQuestion
+      response
+      question_info{
+        id
+        institute
+        office
+        year
+        organizadora{
+          name
+        }
+        area
+      }
+    }
+  }
+}
