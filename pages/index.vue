@@ -19,46 +19,11 @@
           <v-row>
             <v-col cols="12" sm="6" md="6" lg="4" v-for="law in listLaws" :key="law.title">
               <v-hover v-slot="{ hover }">
-                <v-card v-show="false" height="250" hover
-                    :title="law.name"
-                    :to="{
-                    name: 'leges',
-                    params:{leges: law.name},
-                    query:{id:law.id}  
-                  }">
-                  <v-card-title> 
-                    <v-row>
-                      <v-col cols="10">
-                        <div style="color: red" v-if="hover">{{law.law}}</div> <div v-else>{{law.law}} </div>
-                      </v-col>
-                      <v-col cols="2">
-                        <v-btn icon @click="toggleFavorite" title="favoritar">
-                          <div v-if="$auth.loggedIn">
-                            <v-icon v-if="law.favSelect" color="yellow darken-3">mdi-star</v-icon>
-                            <v-icon v-else color="grey lighten-1">mdi-star-outline</v-icon>
-                          </div>   
-                        </v-btn>
-                      </v-col>
-                    </v-row>      
-                  </v-card-title>
-                  <v-card-subtitle> {{law.nro_law}} <br> {{law.name}}</v-card-subtitle>
-                  
-                  <v-card-text class="text-justify">{{law.description | truncate(110)}}</v-card-text>
-                  <v-card-text class="text-justify">
-                    <v-chip-group column>
-                      <v-chip v-for="subject in law.subjects" :key="subject.name" small class="mr-1">{{subject.name}}</v-chip>
-                    </v-chip-group>
-                  </v-card-text>
-                </v-card>
-              </v-hover>
-
-        
-              <v-hover v-slot="{ hover }">
                 <v-card
                   class="mx-auto"
                   color="grey lighten-4"
                   max-width="600"
-                  height="380"
+                  max-height="380"
                 >
                  <nuxt-link :to="{
                     name: 'leges',
@@ -94,13 +59,13 @@
                             <v-icon color="gray">mdi-star-outline</v-icon>
                           </div>   
                     </v-btn>
-                    <div class="font-weight-light grey--text text-h6 mb-2">
+                    <div class="font-weight-light grey--text text-h6">
                       {{law.nro_law}}
                     </div>
-                    <h3 class="text-h6 font-weight-light orange--text mb-2">
+                    <h3 class="text-h6 font-weight-light orange--text">
                       {{law.name | truncate(30)}}
                     </h3>
-                    <div class="font-weight-light text-h7 mb-2 text-justify">
+                    <div class="font-weight-light text-h7 text-justify">
                       {{law.description | truncate(80)}}
                     </div>
                   </v-card-text>
