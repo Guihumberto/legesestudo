@@ -29,12 +29,23 @@
                     <v-container>
                         <v-row>
                           <v-col cols="12">
+                            <v-select
+                              label="Prova"
+                              outlined
+                              v-model="question_info"
+                              :items="questionInfos"
+                              item-text="institute"
+                              item-value='id'
+                              dense
+                            ></v-select>
+                          </v-col>
+                          <v-col cols="12">
                               <v-textarea
                               label="Texto da Questão"
                               required
                               dense
                               outlined
-                              v-model="questions.question"
+                              v-model="questions.textQuestion"
                               :rules="[rules.required]"
                               ></v-textarea>
                           </v-col>
@@ -95,10 +106,12 @@
   export default {
     data () {
       return {
+        question_info: null,
         dialog: false,
         response: true,
+        questionInfos: null,
         questions:{
-          question: "",
+          textQuestion: "",
           response: null,
         },
         rules: { required: (value) => !!value || "Este campo é obrigatório"}, 
@@ -115,8 +128,9 @@
         if (this.$refs.form.validate()) {
 
             this.questions["id"] = parseInt(this.textData.id)
+            this.questions["question_info"] = parseInt(this.question_info)
 
-            this.dialog = false
+            console.log(this.questions)
 
             this.$apollo.mutate({
             mutation:require('../../graphql/createQuestion.gql'),
@@ -148,6 +162,17 @@
       editQuestion(){
         console.log("editar questao")
       }
+    },
+    async fetch(){
+      const client = this.$apollo.getClient()
+      const query = {
+        query: require("../../graphql/questionInfos.gql")
+      }
+
+      await client.query(query).then(data => {
+        console.log(data)
+        this.questionInfos = data.data.questionInfos
+      })
     }
   }
 </script>

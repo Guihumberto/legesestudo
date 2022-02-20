@@ -1,0 +1,19 @@
+mutation($idUser:ID!, $favoritesLaw:[ID!]){
+  updateUser(
+    input:{
+      where:{id:$idUser}
+      data:{
+        favoritesText:$favoritesLaw
+      }
+    }
+  ){
+    user{
+      id
+      username
+      favoritesText{
+      	id
+        text
+    }
+    }
+  }
+}

@@ -1,14 +1,16 @@
 mutation(
   $id:ID!
   $response:Boolean!
-  $question:String!
+  $textQuestion:String!
+  $question_info:ID!
 ){
   createQuestion(
     input:{
       data:{
      			response:$response
           lawtext:$id
-        	textQuestion:$question
+        	textQuestion:$textQuestion
+      		question_info:$question_info
       }
     }
   ){

@@ -110,7 +110,6 @@ export default {
       favoriteLaw: false,
     }
   },
-
   computed:{
     laws(){
       return this.$store.getters.readLaws
@@ -215,6 +214,11 @@ export default {
       console.log("favorites")
       await this.$store.dispatch("user/getFavorites")
     }
+    if(this.$store.getters['user/favoritesText'] == null){
+      console.log("favoritesText")
+      await this.$store.dispatch("user/getFavoritesText")
+    }
+
   }
 }
 </script>

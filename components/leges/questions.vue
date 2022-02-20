@@ -13,9 +13,7 @@
                             <v-alert dense type="info" class="mt-2" outlined>
                             {{questions.question_info.office}} - {{questions.question_info.institute}} - {{questions.question_info.year}} - <strong>{{questions.question_info.organizadora.name}}</strong>
                             </v-alert>
-                            <p :style="{ fontSize: fontSizeProp + 'px'}" class="text-justify textQuestions">
-                            {{questions.textQuestion}}
-                            </p>
+                            <p :style="{ fontSize: fontSizeProp + 'px'}" class="text-justify textQuestions" v-html="questions.textQuestion"></p>
                             <v-card-actions v-if="resolution">
                                 <v-btn small color="success" @click="resolutionClick(true, questions.response)">Certo</v-btn>
                                 <v-btn small outlined color="success" @click="resolutionClick(false, questions.response)">Falso</v-btn>

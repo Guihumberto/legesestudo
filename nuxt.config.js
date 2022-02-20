@@ -10,7 +10,7 @@ export default {
     titleTemplate: '%s - Estudo da Lei',
     title: 'Estudo da Lei',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'pt-br'
     },
     meta: [
       { charset: 'utf-8' },

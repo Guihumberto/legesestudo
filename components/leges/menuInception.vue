@@ -41,7 +41,7 @@
         <v-divider></v-divider>
 
         <v-list>
-          <v-list-item>
+          <v-list-item v-if="$auth.user.id === 1">
             <v-list-item-action>
               <leges-cadQuestions :textData="textData" />
             </v-list-item-action>

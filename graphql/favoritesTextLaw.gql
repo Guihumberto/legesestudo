@@ -1,0 +1,14 @@
+query($id:ID!){
+  user(id:$id){
+    favoritesText{
+      id
+      text
+      art
+      law{
+        id
+        name
+        nro_law
+      }
+    }
+  }
+}

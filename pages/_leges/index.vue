@@ -4,7 +4,6 @@
       <layout-breadcrumbs :law="infolaw.law" />
       <leges-config @fontSize="pagination.fontSizeProp = $event" :pagination="pagination" @search="findDispositive = $event" 
       @artPerpage="dispositiveScreen = $event" @seletcArt="testArt($event)" :dispositiveScreen="dispositiveScreen" />
-      
       <v-card width="980" flat class="mx-auto">
         <v-card-title>
           <v-spacer></v-spacer>
@@ -14,7 +13,7 @@
         </v-card-title>
       </v-card>
       <leges-titleLaw :infolaw="infolaw" />
-
+  
       <v-btn icon large @click="toggleFavorite" v-if="$auth.loggedIn">
         <v-icon large :color="lawIsLiked? 'yellow darken-3':'grey lighten-1'" >mdi-star</v-icon>
       </v-btn>
@@ -35,6 +34,9 @@
                     <v-badge v-show="text.questions.length > 0 || text.comments.length > 0" color="success" bordered left :content="text.questions.length" overlap>
                     <v-btn x-small @click="text.show = !text.show" fab icon> <v-icon>mdi-message-reply-text</v-icon></v-btn></v-badge> <span v-html="text.text"> </span> 
                     <v-avatar height="14" width="1" v-show="hover" v-if="$auth.loggedIn" >
+                      <v-btn @click="toggleTextLawFavorite(text)" icon>
+                        <v-icon :color="text.favSelect ? 'error':'secondary'" x-small>mdi-heart</v-icon>
+                      </v-btn>
                       <leges-menuInception :commentList="text.comments" :id="text.id" :textData="text" />
                     </v-avatar>
                   </p>
@@ -67,6 +69,7 @@ export default {
   data(){
     return{
       favoriteLaw: false,
+      favoriteTextLaw: false,
       searchAll: false,
       findDispositive: "",
       show: false,
@@ -266,7 +269,35 @@ export default {
       }
       this.favoriteLaw = liked
       return liked
-    }
+    },
+    userFavoritesTextLaw(){
+      return this.$store.getters['user/favoritesText']
+    },
+    favaritesTextLawIds(){
+      let favIds = []
+      if(this.userFavoritesTextLaw){
+        this.userFavoritesTextLaw.forEach((law)=>{
+        favIds.push(law.id)
+        })
+      }  
+      return favIds
+    },
+    listFavoriteTextLaws(){
+      let favorite = []
+      
+      if(this.textlaw){
+          this.textlaw.forEach((law)=>{
+            if(this.favaritesTextLawIds.includes(law.id)) {
+              law['favSelect'] = true
+              favorite.push(law) 
+            } else {
+              law['favSelect'] = false
+              favorite.push(law)
+            }
+          })
+      }
+      return favorite
+    },
   },
 
   directives:{
@@ -288,11 +319,6 @@ export default {
   async asyncData({app, route }){
     const client = app.apolloProvider.defaultClient
     let id = route.query.id
-    
-    // const query = {
-    //   query:require("../../graphql/lawSingle.gql"),
-    //   variables:{id}
-    // }
 
     const qry = {
       query:require("../../graphql/totalCount.gql"),
@@ -303,11 +329,6 @@ export default {
     await client.query(qry).then(data => {
       totalCount = data.data.lawtextsConnection.aggregate.count
     })
-
-    // let infolaw = []
-    // await client.query(query).then(data => {
-    //   infolaw = data.data.law
-    // })
 
     return{ totalCount }
   },
@@ -368,9 +389,63 @@ export default {
     },
     error(){
       this.$store.dispatch("snackbars/setSnackbars", {text:'Faça login ou crie uma conta para adicionar uma lei ao seus favoritos', color:'error', timeout:'3000'})
+    },
+    textLawIsLiked(index){
+      let liked = false
+      if(this.userFavoritesTextLaw){
+        const id = index
+        liked = this.userFavoritesTextLaw.some((fav) => fav.id == id )
+      }
+      this.favoriteTextLaw = liked
+      return liked
+    },
+    toggleTextLawFavorite(law){
+      if(!this.$auth.loggedIn){
+        return this.$store.dispatch("snackbars/setSnackbars", {text:'Faça login ou crie uma conta para adicionar um dispositivo aos seus favoritos', color:'error', timeout:'3000'})
+      }
+      this.textLawIsLiked(law.id)
+      this.favoriteTextLaw = !this.favoriteTextLaw
+      if(this.favoriteTextLaw){
+        this.favoritarTextLaw(law)
+      }else{
+        this.unFavTextLaw(law.id)
+      }
+    },
+    favoritarTextLaw(law){
+      console.log('fav')
+      this.$store.commit("user/addLawFavText", law)
+      let userFav = this.$store.getters['user/favoritesTextGQL']
+
+      const variables = {
+        idUser: this.$auth.user.id,
+        favoritesLaw:userFav
+      }
+
+        this.$apollo.mutate({
+          mutation:require("../../graphql/updateFavTextLaw.gql"),
+          variables:variables
+        })
+       this.$store.dispatch("snackbars/setSnackbars", {text:'Você adicionou um dispositivo ao seus favoritos', color:'success'})
+    },
+    unFavTextLaw(index){
+      console.log('unfav')
+      this.$store.commit("user/removeLawFavText", index)
+
+      let userFav = this.$store.getters['user/favoritesTextGQL']
+
+      const variables = {
+        idUser: this.$auth.user.id,
+        favoritesLaw:userFav
+      }
+
+        this.$apollo.mutate({
+          mutation:require("../../graphql/updateFavTextLaw.gql"),
+          variables:variables
+        })
+      this.$store.dispatch("snackbars/setSnackbars", {text:'Você Removeu um dispositivo dos seus favoritos', color:'error'})
     }
   },
-  created(){
+  async created(){
        const cookie = this.$cookiz.get('page')
         if(cookie) {
            this.dispositiveScreen = cookie.qdtArt || 10
@@ -383,6 +458,17 @@ export default {
         // this.$route.params.leges
         // ? this.art = this.$route.params.leges
         // : this.art = null
+  },
+  async mounted(){
+    if(this.$store.getters['user/favorites'] == null){
+      console.log("favorites")
+      await this.$store.dispatch("user/getFavorites")
+    }
+    if(this.$store.getters['user/favoritesText'] == null){
+      console.log("favoritesText")
+      await this.$store.dispatch("user/getFavoritesText")
+    }
+
   }
 }
 </script>

@@ -2,6 +2,7 @@
     <v-card max-width="1080" min-height="700" class="mx-auto pa-10">
         <h2 class="mb-5">Importar Lei</h2>
         <v-form @submit.prevent="onsubmit" ref="form">
+            
             <v-select
             label="Lei"
             outlined
@@ -12,6 +13,7 @@
             :rules="[rules.required]"
             dense
             ></v-select>
+
             <v-textarea
             label="texto da lei"
             v-model="textLaw"
