@@ -60,7 +60,7 @@ export const mutations = {
 export const actions = {
     async getFavorites({commit}){
         let client = this.app.apolloProvider.defaultClient
-        let id = 1
+        let id = this.auth.user.id
         const query = {
             query:require("../graphql/favoritesUser.gql"),
             fetchPolicy:"no-cache",
@@ -72,7 +72,7 @@ export const actions = {
     },
     async getFavoritesText({commit}){
         let client = this.app.apolloProvider.defaultClient
-        let id = 1
+        let id = this.auth.user.id
         const query = {
             query:require("../graphql/favoritesTextLaw.gql"),
             fetchPolicy:"no-cache",

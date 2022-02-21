@@ -172,7 +172,9 @@ export default {
     logout(){
       this.$auth.logout()
       this.drawer = false
-      this.$store.dispatch("snackbars/setSnackbars", {text:'Sessão enecerrada!', color:'success', timeout:'3000'})
+      this.$store.commit("user/resetFav")
+      this.$store.commit("user/resetTextLawFav")
+      this.$store.dispatch("snackbars/setSnackbars", {text:'Sessão enecerrada!', color:'error', timeout:'3000'})
     },
   }
 }

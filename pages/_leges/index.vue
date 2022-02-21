@@ -460,15 +460,16 @@ export default {
         // : this.art = null
   },
   async mounted(){
-    if(this.$store.getters['user/favorites'] == null){
+    if(this.$auth.loggedIn){
+      if(this.$store.getters['user/favorites'] == null){
       console.log("favorites")
       await this.$store.dispatch("user/getFavorites")
+      }
+      if(this.$store.getters['user/favoritesText'] == null){
+        console.log("favoritesText")
+        await this.$store.dispatch("user/getFavoritesText")
+      }
     }
-    if(this.$store.getters['user/favoritesText'] == null){
-      console.log("favoritesText")
-      await this.$store.dispatch("user/getFavoritesText")
-    }
-
   }
 }
 </script>
