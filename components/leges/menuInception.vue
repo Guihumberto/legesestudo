@@ -28,9 +28,9 @@
 
             <v-list-item-action>
               <v-btn
-                :class="fav ? 'red--text' : ''"
+                :class="favText ? 'red--text' : ''"
                 icon
-                @click="fav = !fav"
+                @click="$emit('FavInception', !favText)"
               >
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
@@ -88,6 +88,9 @@
       },
       id:{
         required:true
+      },
+      favText:{
+        required:false
       }
     }
   }

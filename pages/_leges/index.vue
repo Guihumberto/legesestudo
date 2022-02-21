@@ -26,7 +26,7 @@
       </div>
 
       <v-card-text>
-          <div v-for="text in filtro" :key="text.id">
+          <div v-for="text in listFavoriteTextLaws" :key="text.id">
             <v-hover v-slot="{ hover }">
               <div :class="text.structura ? 'structura':'none'">
                 <div :style="revoked(text.text)" :id="text.id">
@@ -37,7 +37,7 @@
                       <v-btn @click="toggleTextLawFavorite(text)" icon>
                         <v-icon :color="text.favSelect ? 'error':'secondary'" x-small>mdi-heart</v-icon>
                       </v-btn>
-                      <leges-menuInception :commentList="text.comments" :id="text.id" :textData="text" />
+                      <leges-menuInception :commentList="text.comments" :id="text.id" :textData="text" :favText="text.favSelect" @FavInception="toggleTextLawFavorite(text)" />
                     </v-avatar>
                   </p>
                 </div>
@@ -285,8 +285,8 @@ export default {
     listFavoriteTextLaws(){
       let favorite = []
       
-      if(this.textlaw){
-          this.textlaw.forEach((law)=>{
+      if(this.filtro){
+          this.filtro.forEach((law)=>{
             if(this.favaritesTextLawIds.includes(law.id)) {
               law['favSelect'] = true
               favorite.push(law) 
