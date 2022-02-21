@@ -76,6 +76,7 @@ export default {
       start: 0,
       limit: 100,
       idLaw: this.$route.query.id,
+      artSearch: this.$route.query.art,
       search: "",
       artigo: null,
       art: null,
@@ -452,9 +453,9 @@ export default {
            this.pagination.fontSizeProp = cookie.fontSize || 12
         }     
 
-        // if(this.$route.params.leges){
-        //   return this.art = this.$route.params.leges
-        // }
+        if(this.artSearch){
+          return this.art = this.artSearch
+        }
         // this.$route.params.leges
         // ? this.art = this.$route.params.leges
         // : this.art = null

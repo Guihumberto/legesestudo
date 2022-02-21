@@ -43,8 +43,8 @@
                                                             <v-list-item-action-text v-text="`Art. ${law.art}`"></v-list-item-action-text>
                                                             <v-btn icon small :to="{
                                                             name: 'leges',
-                                                            params:{leges: law.art},
-                                                            query:{id:law.law.id},  
+                                                            params:{leges: law.art, art:law.art},
+                                                            query:{id:law.law.id, art:law.art},  
                                                             }"><v-icon 
                                                             >mdi-book-arrow-right</v-icon></v-btn>
                                                         </v-list-item-action>
