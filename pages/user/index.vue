@@ -4,52 +4,22 @@
             <v-card-title> <v-icon>mdi-tools</v-icon> Perfil e Favoritos</v-card-title>
             <v-card-subtitle>Favoritos</v-card-subtitle>
             <v-card-text>   
-                <v-list two-line>
-                    <v-list-item-group
-                        v-model="selected"
-                        active-class="pink--text"
-                        multiple
+                <v-expansion-panels focusable>
+                    <v-expansion-panel
+                    v-for="(laws,index) in lawOrganize"
+                    :key="index"
                     >
-                        <template v-for="(item, index) in favoritesTextLaw">
-                        <v-list-item :key="item.id">
-                            <template v-slot:default="{ active }">
-                            <v-list-item-content>
-                                <v-list-item-title v-text="item.law.name"></v-list-item-title>
+                    <v-expansion-panel-header>{{index}}</v-expansion-panel-header>
+                    <v-expansion-panel-content v-for="law in laws" :key="law.id">
+                        
+                        <p class="text-justify textLaw" >
+                            <span v-html="law.text" :title="`art.${law.art}`">
 
-                                <v-list-item-subtitle
-                                class="text--primary"
-                                v-text="item.law.nro_law"
-                                ></v-list-item-subtitle>
-                                <v-list-item-subtitle v-html="item.text"></v-list-item-subtitle>
-                            </v-list-item-content>
-
-                            <v-list-item-action>
-                                <v-list-item-action-text>art. {{item.art}}º</v-list-item-action-text>
-
-                                <v-icon
-                                v-if="!active"
-                                color="grey lighten-1"
-                                >
-                                mdi-star-outline
-                                </v-icon>
-
-                                <v-icon
-                                v-else
-                                color="yellow darken-3"
-                                >
-                                mdi-star
-                                </v-icon>
-                            </v-list-item-action>
-                            </template>
-                        </v-list-item>
-
-                        <v-divider
-                            v-if="index < favoritesTextLaw.length - 1"
-                            :key="index"
-                        ></v-divider>
-                        </template>
-                    </v-list-item-group>
-                    </v-list>
+                            </span>
+                        </p>
+                    </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
             </v-card-text>
         </v-card>
     </v-container>
@@ -62,6 +32,17 @@ export default {
         return{
             selected: [2],
         }
+    },
+    computed:{
+        lawOrganize(){
+              return this.favoritesTextLaw.reduce(function(acumulador, text){
+                  if(!acumulador[text.law.name]) {
+                      acumulador[text.law.name] = []   
+                  }
+                  acumulador[text.law.name].push(text)
+                  return acumulador
+              }, {})
+          },
     },
     async asyncData({app, store}){
         let client = app.apolloProvider.defaultClient
@@ -80,3 +61,13 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.textLaw{
+  font-family: 'Century Gothic', Courier, monospace;
+  line-height: 1.7;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+</style>

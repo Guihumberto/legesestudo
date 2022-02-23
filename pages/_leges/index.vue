@@ -37,7 +37,7 @@
                       <v-btn @click="toggleTextLawFavorite(text)" icon>
                         <v-icon :color="text.favSelect ? 'error':'secondary'" x-small>mdi-heart</v-icon>
                       </v-btn>
-                      <leges-menuInception :commentList="text.comments" :id="text.id" :textData="text" :favText="text.favSelect" @FavInception="toggleTextLawFavorite(text)" />
+                      <leges-menuInception :commentList="text.comments" :id="text.id" :textData="text" :favText="text.favSelect" @FavInception="toggleTextLawFavorite(text)" :law="infolaw" />
                     </v-avatar>
                   </p>
                 </div>

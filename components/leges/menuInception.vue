@@ -23,17 +23,9 @@
           <v-list-item>    
             <v-list-item-content>
               <v-list-item-title>Painel</v-list-item-title>
-              <v-list-item-subtitle>Favoritar Dispositivo</v-list-item-subtitle>
             </v-list-item-content>
-
             <v-list-item-action>
-              <v-btn
-                :class="favText ? 'red--text' : ''"
-                icon
-                @click="$emit('FavInception', !favText)"
-              >
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
+              <v-btn icon small @click="menu = false"><v-icon >mdi-close</v-icon></v-btn>
             </v-list-item-action>
           </v-list-item>
         </v-list>
@@ -54,18 +46,25 @@
             </v-list-item-action>
             <v-list-item-title>Inserir Comentários</v-list-item-title>
           </v-list-item>
+          <v-list-item>
+              <v-btn
+                :class="favText ? 'red--text' : ''"
+                icon
+                @click="$emit('FavInception', !favText)"
+              >
+                <v-icon>mdi-heart</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi-share-variant</v-icon>
+              </v-btn>
+              <v-btn icon @click="whatsapp">
+                <v-icon>mdi-whatsapp</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi-content-paste</v-icon>
+              </v-btn>
+          </v-list-item>
         </v-list>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn
-            text
-            @click="menu = false"
-          >
-            Fechar
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </v-menu>
   </div>
@@ -91,7 +90,20 @@
       },
       favText:{
         required:false
+      },
+      law:{
+        required:false
       }
+    },
+    methods:{
+      whatsapp() {
+              let text = this.textData.text.replace("<b>", "*")
+              let textfinal = text.replace("</b>", "*")
+              const site = "?text= "+ textfinal +" - "+ this.law.nro_law +" - "+ this.law.name +"   https://www.estudodalei.com.br"
+              const urlApi = /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent) ? "https://api.whatsapp.com/send" : "https://web.whatsapp.com/send" 
+              window.open(urlApi + site, "_blank")
+              this.menu = false
+            },
     }
   }
 </script>

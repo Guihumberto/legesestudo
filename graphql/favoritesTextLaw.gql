@@ -1,6 +1,6 @@
 query($id:ID!){
   user(id:$id){
-    favoritesText{
+    favoritesText(sort: "art:asc, org:asc"){
       id
       text
       art
