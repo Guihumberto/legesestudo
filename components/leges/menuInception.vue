@@ -1,6 +1,7 @@
 <template>
   <div class="text-center">
     <v-menu
+      transition="scale-transition"
       v-model="menu"
       :close-on-content-click="false"
       :nudge-width="200"

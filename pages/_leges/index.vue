@@ -9,7 +9,9 @@
           <v-spacer></v-spacer>
           <leges-structura @seletcArt="testArt($event)" :law="idLaw" />
           <leges-anexos />
-          <leges-options />
+
+          <leges-options :filterMenu="filterFavMenu" @filterSelect="filterFavMenu.isFilter = $event"/>
+
         </v-card-title>
       </v-card>
       <leges-titleLaw :infolaw="infolaw" />
@@ -21,7 +23,7 @@
         <v-icon large color="grey lighten-1" >mdi-star</v-icon>
       </v-btn>
 
-      <div v-show="!art">
+      <div v-show="!art && !filterFavMenu.isFilter">
         <leges-pagination v-show="!findDispositive" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount"/>
       </div>
 
@@ -53,7 +55,7 @@
           </div>
       </v-card-text>
 
-      <div v-show="!findDispositive">
+      <div v-show="!findDispositive && !filterFavMenu.isFilter">
         <leges-pagination v-show="!art" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount" @onTopPage="topPage($event)" />
       </div>
  
@@ -69,8 +71,14 @@ export default {
   data(){
     return{
       favoriteLaw: false,
-      favoriteTextLaw: false,
       searchAll: false,
+      filterFavMenu:{
+        isFilter: false,
+        statistics:false,
+        resume: false, 
+        onlyTextFav: false, 
+        withQuestions: false,
+      },
       findDispositive: "",
       show: false,
       start: 0,
@@ -297,7 +305,10 @@ export default {
             }
           })
       }
-      return favorite
+   
+      return this.filterFavMenu.isFilter
+      ? favorite.filter((law)=>law.favSelect)
+      : favorite
     },
   },
 
@@ -444,6 +455,12 @@ export default {
           variables:variables
         })
       this.$store.dispatch("snackbars/setSnackbars", {text:'Você Removeu um dispositivo dos seus favoritos', color:'error'})
+    },
+    filterSelect(index){
+      if(index){
+        this.filterFavMenu.onlyTextFav = index
+      } else {
+      }
     }
   },
   async created(){

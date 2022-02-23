@@ -1,8 +1,8 @@
 <template>
   <div class="text-center">
-    <v-menu transition="scale-transition">
+    <v-menu transition="scale-transition" :close-on-content-click="false">
       <template v-slot:activator="{ on: menu, attrs }">
-        <v-tooltip bottom>
+        <v-tooltip top>
           <template v-slot:activator="{ on: tooltip }">
             <v-btn
               color="error"
@@ -18,27 +18,35 @@
           <span>Opçoes de estudo</span>
         </v-tooltip>
       </template>
-      <v-list>
-        <v-list-item
-          v-for="(item, index) in items"
-          :key="index"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
+      <v-card>
+        <v-card-text>
+          <v-switch
+            @click="sendOptions"
+            v-model="filterMenu.onlyTextFav"
+            label="Dispositivos Favoritos"
+          ></v-switch>
+        </v-card-text>
+      </v-card>
     </v-menu>
   </div>
 </template>
 
 <script>
   export default {
-    data: () => ({
-      items: [
-        { title: 'Estatísticas' },
-        { title: 'Resumo' },
-        { title: 'Favoritados' },
-        { title: 'Com questões' },
-      ],
-    }),
+    data(){
+      return{
+
+      }
+    },
+    props:{
+      filterMenu:{
+        required: true
+      }
+    },
+    methods:{
+      sendOptions(){
+        this.$emit("filterSelect", this.filterMenu.onlyTextFav)
+      }
+    }
   }
 </script>
