@@ -55,13 +55,45 @@
               >
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
-              <v-btn icon>
+              <v-dialog
+                v-model="dialog"
+                persistent
+                max-width="600px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    icon
+                  >
+                    <v-icon>mdi-share-variant</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5">Copiar Dispositivo</span>
+                    <v-spacer></v-spacer>
+                    <v-btn icon small @click="dialog = false"> <v-icon>mdi-close</v-icon> </v-btn>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-textarea id="textDataLaw" :value="textData.text.replace('<b>', '').replace('</b>', '')" outlined label="Dispositivo"></v-textarea>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                      <v-btn  @click="copiarTextLaw" color="primary">Copiar</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <!-- <v-btn icon @click="copiarTextLaw">
+                <input type="hidden" class="testing-code" :value="textData.text">
                 <v-icon>mdi-share-variant</v-icon>
-              </v-btn>
+              </v-btn> -->
               <v-btn icon @click="whatsapp">
                 <v-icon>mdi-whatsapp</v-icon>
               </v-btn>
-              <v-btn icon>
+              <v-btn icon @click="copiarNow">
                 <v-icon>mdi-content-paste</v-icon>
               </v-btn>
           </v-list-item>
@@ -78,6 +110,7 @@
       menu: false,
       message: false,
       hints: true,
+      dialog: false,
     }),
     props:{
       textData:{
@@ -104,7 +137,15 @@
               const urlApi = /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent) ? "https://api.whatsapp.com/send" : "https://web.whatsapp.com/send" 
               window.open(urlApi + site, "_blank")
               this.menu = false
-            },
+      },
+      copiarTextLaw(){
+        navigator.clipboard.writeText(this.textData.text.replace('<b>', '').replace('</b>', ''))
+        this.$store.dispatch("snackbars/setSnackbars", {text:'Você copiou o dispositivo para área de transferência.', color:'success'})
+      },
+      copiarNow(){
+        navigator.clipboard.writeText(this.textData.text.replace('<b>', '').replace('</b>', ''))
+        this.$store.dispatch("snackbars/setSnackbars", {text:'Você copiou o dispositivo para área de transferência.', color:'success'})
+      }
     }
   }
 </script>
