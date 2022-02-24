@@ -49,6 +49,7 @@
           </v-list-item>
           <v-list-item>
               <v-btn
+                title="Marcar dispositivo como importante"
                 :class="favText ? 'red--text' : ''"
                 icon
                 @click="$emit('FavInception', !favText)"
@@ -62,6 +63,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
+                    title="copiar dispositivo para área de transferência"
                     color="primary"
                     dark
                     v-bind="attrs"
@@ -86,15 +88,11 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-              <!-- <v-btn icon @click="copiarTextLaw">
-                <input type="hidden" class="testing-code" :value="textData.text">
-                <v-icon>mdi-share-variant</v-icon>
-              </v-btn> -->
-              <v-btn icon @click="whatsapp">
-                <v-icon>mdi-whatsapp</v-icon>
-              </v-btn>
-              <v-btn icon @click="copiarNow">
+              <v-btn icon @click="copiarNow" title="Copiar dispositivo diretamente">
                 <v-icon>mdi-content-paste</v-icon>
+              </v-btn>
+              <v-btn icon @click="whatsapp" title="compartilhar dispositivo pelo whatsapp">
+                <v-icon>mdi-whatsapp</v-icon>
               </v-btn>
           </v-list-item>
         </v-list>
