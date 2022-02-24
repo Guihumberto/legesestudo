@@ -84,7 +84,8 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                      <v-btn  @click="copiarTextLaw" color="primary">Copiar</v-btn>
+                    <v-btn outlined color="primary" @click="dialog= false">fechar</v-btn>
+                    <v-btn  @click="copiarTextLaw" color="primary">Copiar</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>

@@ -6,17 +6,17 @@
       @artPerpage="dispositiveScreen = $event" @seletcArt="testArt($event)" :dispositiveScreen="dispositiveScreen" />
       <v-card width="980" flat class="mx-auto">
         <v-card-title>
+          <leges-filter :filter="filterFavMenu" @filtersFav="filterFavMenu.isFilter = $event" @filtersQc="filterFavMenu.withQuestions = $event" />
           <v-spacer></v-spacer>
           <leges-structura @seletcArt="testArt($event)" :law="idLaw" />
-          <leges-anexos />
-
-          <leges-options :filterMenu="filterFavMenu" @filterSelect="filterFavMenu.isFilter = $event"/>
+          <leges-anexos v-show="false" />
+          <leges-options :filterMenu="filterFavMenu" />
 
         </v-card-title>
       </v-card>
       <leges-titleLaw :infolaw="infolaw" />
   
-      <v-btn icon large @click="toggleFavorite" v-if="$auth.loggedIn">
+      <v-btn title="Add Favoritos" icon large @click="toggleFavorite" v-if="$auth.loggedIn">
         <v-icon large :color="lawIsLiked? 'yellow darken-3':'grey lighten-1'" >mdi-star</v-icon>
       </v-btn>
       <v-btn @click="error" icon large v-else title="Login necessário!">
@@ -74,9 +74,6 @@ export default {
       searchAll: false,
       filterFavMenu:{
         isFilter: false,
-        statistics:false,
-        resume: false, 
-        onlyTextFav: false, 
         withQuestions: false,
       },
       findDispositive: "",
@@ -305,10 +302,20 @@ export default {
             }
           })
       }
-   
-      return this.filterFavMenu.isFilter
-      ? favorite.filter((law)=>law.favSelect)
-      : favorite
+
+      if(this.filterFavMenu.isFilter || this.filterFavMenu.withQuestions){
+        if(this.filterFavMenu.isFilter){
+          return favorite.filter((law)=>law.favSelect)
+        }else if(this.filterFavMenu.withQuestions){
+          return favorite.filter((law)=> law.questions.length > 0)
+        } else if (this.filterFavMenu.isFilter && this.filterFavMenu.withQuestions){
+          let favoriteFav = favorite.filter((law)=>law.favSelect)
+          favoriteFav = favoriteFav.filter((law)=> law.questions.length > 0)
+          return favoriteFav
+        }
+      }else {
+        return favorite
+      }
     },
   },
 

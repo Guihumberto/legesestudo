@@ -1,11 +1,11 @@
 <template>
     <v-row justify="center">
         <v-col cols="12" align="center">
-          <v-btn color="orange" icon dense @click="firstPage"><v-icon>mdi-rewind</v-icon></v-btn>
-          <v-btn color="orange" icon dense @click="prev"><v-icon>mdi-arrow-left-drop-circle-outline</v-icon></v-btn>
-          <v-btn color="orange" text>{{pagination.page}} - {{Math.ceil(pageTot/dispositiveScreen)}}</v-btn>
-          <v-btn color="orange" icon dense @click="next"> <v-icon>mdi-arrow-right-drop-circle-outline</v-icon></v-btn>
-          <v-btn color="orange" icon dense @click="lastPage"> <v-icon>mdi-fast-forward</v-icon></v-btn>
+          <v-btn title="Primeira página" color="orange" icon dense @click="firstPage"><v-icon>mdi-rewind</v-icon></v-btn>
+          <v-btn title="Página anterior" color="orange" icon dense @click="prev"><v-icon>mdi-arrow-left-drop-circle-outline</v-icon></v-btn>
+          <v-btn title="marcador" color="orange" text>{{pagination.page}} - {{Math.ceil(pageTot/dispositiveScreen)}}</v-btn>
+          <v-btn title="página seguinte" color="orange" icon dense @click="next"> <v-icon>mdi-arrow-right-drop-circle-outline</v-icon></v-btn>
+          <v-btn title="Última página" color="orange" icon dense @click="lastPage"> <v-icon>mdi-fast-forward</v-icon></v-btn>
         </v-col>
       </v-row>
 </template>
