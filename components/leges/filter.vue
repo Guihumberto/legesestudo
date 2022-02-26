@@ -1,5 +1,5 @@
 <template>
-    <v-row>
+    <v-row> 
         <v-switch
         class="mr-2" dense
         label="apenas favoritos"
@@ -9,6 +9,7 @@
         <v-switch
         class="mr-2" dense
         label="com questões"
+        :disabled="filter.isFilter"
         v-model="filter.withQuestions"
         @click="$emit('filtersQc', filter.withQuestions)"
         ></v-switch>

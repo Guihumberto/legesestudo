@@ -5,7 +5,7 @@
       <leges-config @fontSize="pagination.fontSizeProp = $event" :pagination="pagination" @search="findDispositive = $event" 
       @artPerpage="dispositiveScreen = $event" @seletcArt="testArt($event)" :dispositiveScreen="dispositiveScreen" />
       <v-card width="980" flat class="mx-auto">
-        <v-card-title>
+         <v-card-title>
           <leges-filter :filter="filterFavMenu" @filtersFav="filterFavMenu.isFilter = $event" @filtersQc="filterFavMenu.withQuestions = $event" />
           <v-spacer></v-spacer>
           <leges-structura @seletcArt="testArt($event)" :law="idLaw" />
@@ -27,11 +27,11 @@
       </div>
 
       <v-card-text>
-          <div v-for="text in listFavoriteTextLaws" :key="text.id">
+          <div v-for="text in listFavoriteTextLaws" :key="text.id" class="textLawAlternative">
             <v-hover v-slot="{ hover }">
               <div :class="text.structura ? 'structura':'none'">
                 <div :style="revoked(text.text)" :id="text.id">
-                  <p class="text-justify textLaw" :style="{ fontSize: pagination.fontSizeProp + 'px'}" v-if="!text.revogado" :title="`art ${text.art}º`">
+                  <p :class="{textLaw: pagination.familyFont }" :style="{ fontSize: pagination.fontSizeProp + 'px'}" v-if="!text.revogado" :title="`art ${text.art}º`">
                     <v-badge v-show="text.questions.length > 0 || text.comments.length > 0" color="success" bordered left :content="text.questions.length" overlap>
                     <v-btn x-small @click="text.show = !text.show" fab icon> <v-icon>mdi-message-reply-text</v-icon></v-btn></v-badge> <span v-html="text.text"> </span> 
                     <v-avatar height="14" width="1" v-show="hover" v-if="$auth.loggedIn" >
@@ -54,7 +54,7 @@
           </div>
       </v-card-text>
 
-      <div v-show="!findDispositive && !filterFavMenu.isFilter && !filterFavMenu.withQuestions"">
+      <div v-show="!findDispositive && !filterFavMenu.isFilter && !filterFavMenu.withQuestions">
         <leges-pagination v-show="!art" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount" @onTopPage="topPage($event)" />
       </div>
  
@@ -89,7 +89,7 @@ export default {
       pagination:{
         page: 1,
         fontSizeProp: 15,
-        typeFont: true
+        familyFont: true
       }
     }
   },
@@ -529,10 +529,22 @@ export default {
 }
 .textLaw{
   font-family: 'Century Gothic', Courier, monospace;
+  color: #333;
   line-height: 1.7;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
+  text-align: justify;
+}
+
+.textLawAlternative{
+  font-family: Source Sans Pro,Trebuchet MS,Tahoma,sans-serif;
+  color: #333;
+  line-height: 1.7;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  text-align: justify;
 }
 
 .art{

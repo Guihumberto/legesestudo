@@ -57,8 +57,8 @@
             <v-btn @click="minusFont">
               <v-icon>mdi-minus</v-icon>
             </v-btn>
-            <v-btn @click="noturno = !noturno">
-              <v-icon v-if="noturno">mdi-moon-new</v-icon> <v-icon v-else>mdi-moon-waxing-crescent</v-icon>
+            <v-btn @click="pagination.familyFont = !pagination.familyFont">
+              <v-icon>mdi-format-font</v-icon>
             </v-btn>
           </v-btn-toggle>
         </v-col>
@@ -72,7 +72,6 @@
     data () {
       return {
         toggle_exclusive: [],
-        noturno: false,
         search:"",
         art: null,
         rules: { positive: (v) => v > 0 || "Artigo Inválido",},
