@@ -22,7 +22,7 @@
         <v-icon large color="grey lighten-1" >mdi-star</v-icon>
       </v-btn>
 
-      <div v-show="!art && !filterFavMenu.isFilter">
+      <div v-show="!art && !filterFavMenu.isFilter && !filterFavMenu.withQuestions">
         <leges-pagination v-show="!findDispositive" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount"/>
       </div>
 
@@ -54,7 +54,7 @@
           </div>
       </v-card-text>
 
-      <div v-show="!findDispositive && !filterFavMenu.isFilter">
+      <div v-show="!findDispositive && !filterFavMenu.isFilter && !filterFavMenu.withQuestions"">
         <leges-pagination v-show="!art" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount" @onTopPage="topPage($event)" />
       </div>
  
