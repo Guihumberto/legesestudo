@@ -11,7 +11,6 @@
           <leges-structura @seletcArt="testArt($event)" :law="idLaw" />
           <leges-anexos v-show="false" />
           <leges-options :filterMenu="filterFavMenu" />
-
         </v-card-title>
       </v-card>
       <leges-titleLaw :infolaw="infolaw" />
@@ -90,6 +89,7 @@ export default {
       pagination:{
         page: 1,
         fontSizeProp: 15,
+        typeFont: true
       }
     }
   },
@@ -305,9 +305,9 @@ export default {
 
       if(this.filterFavMenu.isFilter || this.filterFavMenu.withQuestions){
         if(this.filterFavMenu.isFilter){
-          return favorite.filter((law)=>law.favSelect)
+          return this.favoritesTextLaw
         }else if(this.filterFavMenu.withQuestions){
-          return favorite.filter((law)=> law.questions.length > 0)
+          return this.textlawWithQuestion
         } else if (this.filterFavMenu.isFilter && this.filterFavMenu.withQuestions){
           let favoriteFav = favorite.filter((law)=>law.favSelect)
           favoriteFav = favoriteFav.filter((law)=> law.questions.length > 0)
@@ -337,6 +337,7 @@ export default {
 
   async asyncData({app, route }){
     const client = app.apolloProvider.defaultClient
+    let idUser = app.$auth.user.id
     let id = route.query.id
 
     const qry = {
@@ -349,7 +350,28 @@ export default {
       totalCount = data.data.lawtextsConnection.aggregate.count
     })
 
-    return{ totalCount }
+    const query = {
+      query:require("../../graphql/aTextLaw.gql"),
+      variables:{id}
+    }
+
+    let textlawWithQuestion = []
+    await client.query(query).then(data => {
+      textlawWithQuestion = data.data.lawtexts
+    })
+
+    let qy = {
+            query: require("../../graphql/aFavoritesDispositive.gql"),
+            fetchPolicy: 'no-cache',
+            variables:{id, idUser}
+        }
+        let favoritesTextLaw = null
+        await client.query(qy).then(data => {
+            favoritesTextLaw = data.data.user.favoritesText;
+            store.commit("user/setFavoritesText", favoritesText)
+        }).catch(e => console.log(e))
+
+    return{ totalCount, textlawWithQuestion, favoritesTextLaw }
   },
 
   methods: {

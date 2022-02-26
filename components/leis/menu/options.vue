@@ -20,7 +20,11 @@
       </template>
       <v-card>
         <v-card-text>
- 
+          <v-switch
+            @click="sendOptions"
+            v-model="filterMenu.onlyTextFav"
+            label="Dispositivos Favoritos"
+          ></v-switch>
         </v-card-text>
       </v-card>
     </v-menu>

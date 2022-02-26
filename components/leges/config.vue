@@ -6,7 +6,6 @@
       <v-row align-content="space-between">
         <v-col cols="12" sm="6" md="5">
           <v-text-field
-            append-icon="mdi-book-search-outline"
             flat
             dense
             hide-details
@@ -22,12 +21,13 @@
           <v-text-field
             flat
             dense
-            outlined
+            hide-details
+            solo-inverted
             label="Artigo"
             v-model="art"
             type="number"
             :rules="[rules.positive]"
-            @keyup="seletcArt"
+            @input="seletcArt"
           >
           </v-text-field>
         </v-col>

@@ -1,0 +1,35 @@
+query($idUser:ID! $id:ID!){
+  user(id:$idUser){
+    favoritesText(sort: "art:asc, org:asc", where: {law:{id:$id}}){
+      id
+      art
+      text
+      show
+      org
+      structura
+      revogado
+      questions{
+                  id
+                  textQuestion
+                  response
+                  question_info{
+                    institute
+                    office
+                    year
+                    organizadora{
+                      name
+                    }
+                    area
+                  }
+                }
+      comments{
+        id
+      }
+      law{
+        id
+        name
+        nro_law
+      }
+    }
+  }
+}
