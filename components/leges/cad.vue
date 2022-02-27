@@ -114,6 +114,8 @@
 
             this.comments["id"] = this.id
 
+            this.comments.comments = this.comments.comments.replace('\n', '<br><br>')
+
             this.dialog = false
 
             this.$apollo.mutate({

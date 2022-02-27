@@ -130,7 +130,7 @@
             this.questions["id"] = parseInt(this.textData.id)
             this.questions["question_info"] = parseInt(this.question_info)
 
-            console.log(this.questions)
+            this.questions.textQuestion = this.questions.textQuestion.replace('\n', '<br><br>')
 
             this.$apollo.mutate({
             mutation:require('../../graphql/createQuestion.gql'),
@@ -170,7 +170,6 @@
       }
 
       await client.query(query).then(data => {
-        console.log(data)
         this.questionInfos = data.data.questionInfos
       })
     }
