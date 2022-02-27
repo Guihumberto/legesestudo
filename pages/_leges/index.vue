@@ -146,7 +146,7 @@ export default {
         searchWords: {
           query: gql`
           query($id:ID! $search:String!){
-            lawtexts(sort: "art:asc, org:asc", where:{law:{id:$id}, text_contains:$search}, limit:5){
+            lawtexts(sort: "art:asc, org:asc", where:{law:{id:$id}, text_contains:$search}, limit:15){
               id
                 art
                 structura
@@ -337,7 +337,7 @@ export default {
 
   async asyncData({app, route }){
     const client = app.apolloProvider.defaultClient
-    let idUser = app.$auth.user.id
+    let idUser = 1
     let id = route.query.id
 
     const qry = {
@@ -373,6 +373,7 @@ export default {
 
     return{ totalCount, textlawWithQuestion, favoritesTextLaw }
   },
+  
 
   methods: {
     revoked(index){
