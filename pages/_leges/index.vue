@@ -69,6 +69,7 @@ import gql from "graphql-tag";
 export default {
   data(){
     return{
+      favoritesTextLaw: [],
       favoriteLaw: false,
       searchAll: false,
       filterFavMenu:{
@@ -288,6 +289,25 @@ export default {
       }  
       return favIds
     },
+    async testFavorite(){
+      const client = apolloProvider.defaultClient
+      let idUser = 1
+      let id = route.query.id
+
+      let qy = {
+            query: require("../../graphql/aFavoritesDispositive.gql"),
+            fetchPolicy: 'no-cache',
+            variables:{id, idUser}
+        }
+      let favoritesTextLaw = null
+      await client.query(qy).then(data => {
+          favoritesTextLaw = data.data.user.favoritesText;
+          store.commit("user/setFavoritesText", favoritesText)
+      }).catch(e => console.log(e))
+
+      return favoritesTextLaw
+      
+    },
     listFavoriteTextLaws(){
       let favorite = []
       
@@ -305,7 +325,7 @@ export default {
 
       if(this.filterFavMenu.isFilter || this.filterFavMenu.withQuestions){
         if(this.filterFavMenu.isFilter){
-          return this.favoritesTextLaw
+          return this.testFavorite
         }else if(this.filterFavMenu.withQuestions){
           return this.textlawWithQuestion
         } else if (this.filterFavMenu.isFilter && this.filterFavMenu.withQuestions){
@@ -337,8 +357,8 @@ export default {
 
   async asyncData({app, route }){
     const client = app.apolloProvider.defaultClient
-    let idUser = 1
     let id = route.query.id
+    
 
     const qry = {
       query:require("../../graphql/totalCount.gql"),
@@ -360,18 +380,7 @@ export default {
       textlawWithQuestion = data.data.lawtexts
     })
 
-    let qy = {
-            query: require("../../graphql/aFavoritesDispositive.gql"),
-            fetchPolicy: 'no-cache',
-            variables:{id, idUser}
-        }
-        let favoritesTextLaw = null
-        await client.query(qy).then(data => {
-            favoritesTextLaw = data.data.user.favoritesText;
-            store.commit("user/setFavoritesText", favoritesText)
-        }).catch(e => console.log(e))
-
-    return{ totalCount, textlawWithQuestion, favoritesTextLaw }
+    return{ totalCount, textlawWithQuestion }
   },
   
 
