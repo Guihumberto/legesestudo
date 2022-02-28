@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card width="1080" class="mx-auto pb-2" flat color="cyan">
-      <v-card-title>Painel de Leis (v.1 - Beta)</v-card-title>
+      <v-card-title>Painel de Leis (v.1.1 - Beta)</v-card-title>
       <v-card-subtitle>Legislação em geral</v-card-subtitle>
         <v-text-field
           prepend-inner-icon="mdi-magnify"

@@ -6,7 +6,7 @@
       @artPerpage="dispositiveScreen = $event" @seletcArt="testArt($event)" :dispositiveScreen="dispositiveScreen" />
       <v-card width="980" flat class="mx-auto">
          <v-card-title>
-          <leges-filter :filter="filterFavMenu" @filtersFav="filterFavMenu.isFilter = $event" @filtersQc="filterFavMenu.withQuestions = $event" />
+          <leges-filter :filter="filterFavMenu" @filtersFav="favoritesTextLaw = $event" @filtersQc="filterFavMenu.withQuestions = $event" />
           <v-spacer></v-spacer>
           <leges-structura @seletcArt="testArt($event)" :law="idLaw" />
           <leges-anexos v-show="false" />
@@ -289,25 +289,6 @@ export default {
       }  
       return favIds
     },
-    async testFavorite(){
-      const client = apolloProvider.defaultClient
-      let idUser = 1
-      let id = route.query.id
-
-      let qy = {
-            query: require("../../graphql/aFavoritesDispositive.gql"),
-            fetchPolicy: 'no-cache',
-            variables:{id, idUser}
-        }
-      let favoritesTextLaw = null
-      await client.query(qy).then(data => {
-          favoritesTextLaw = data.data.user.favoritesText;
-          store.commit("user/setFavoritesText", favoritesText)
-      }).catch(e => console.log(e))
-
-      return favoritesTextLaw
-      
-    },
     listFavoriteTextLaws(){
       let favorite = []
       
@@ -325,7 +306,7 @@ export default {
 
       if(this.filterFavMenu.isFilter || this.filterFavMenu.withQuestions){
         if(this.filterFavMenu.isFilter){
-          return this.testFavorite
+          return this.favoritesTextLaw
         }else if(this.filterFavMenu.withQuestions){
           return this.textlawWithQuestion
         } else if (this.filterFavMenu.isFilter && this.filterFavMenu.withQuestions){
