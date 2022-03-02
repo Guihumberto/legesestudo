@@ -14,67 +14,73 @@
           label="Buscar.."
           v-model="findLaw"
         ></v-text-field>
-      <v-card  class="mx-2 pb-2" flat color="cyan">
-        <v-card-text v-if="!findLaw.length">
-          <v-row>
-            <v-col cols="12" sm="6" md="6" lg="4" v-for="law in listLaws" :key="law.title">
-              <v-hover v-slot="{ hover }">
-                <v-card
-                  class="mx-auto"
-                  color="grey lighten-4"
-                  max-width="600"
-                  max-height="380"
-                >
-                 <nuxt-link :to="{
-                    name: 'leges',
-                    params:{leges: law.name},
-                    query:{id:law.id}  
-                  }">
-                    <v-img
-                      :aspect-ratio="16/9"
-                      src="https://cdn.pixabay.com/photo/2017/03/08/14/20/flat-2126884__340.png"
-                      contain>
-                  
-                    <v-expand-transition>
-                      <div
-                        v-if="hover"
-                        class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal text-h2 white--text"
-                        style="height: 100%;"
-                      >
-                        {{law.law}}
-                      </div>
-                    </v-expand-transition>
-                  </v-img>
-                  </nuxt-link>
-                  <v-card-text
-                    class="pt-4 textContainer"
-                    style="position: relative;"
-                  >
-                    <v-btn fab absolute right top @click="toggleFavorite(law)" title="favoritar">
-                          <div v-if="$auth.loggedIn">
-                            <v-icon v-if="law.favSelect" color="yellow darken-3">mdi-star</v-icon>
-                            <v-icon v-else color="gray">mdi-star-outline</v-icon>
+          <v-card  class="mx-2 pb-2" flat color="cyan">
+            <v-card-text v-if="!findLaw.length">
+              <v-row>
+                <v-col cols="12" sm="6" md="6" lg="4" v-for="law in listLaws" :key="law.title">
+                  <v-hover v-slot="{ hover }">
+                    <v-card
+                      class="mx-auto"
+                      color="grey lighten-4"
+                      max-width="600"
+                      max-height="380"
+                    >
+                    <nuxt-link :to="{
+                        name: 'leges',
+                        params:{leges: law.name},
+                        query:{id:law.id}  
+                      }">
+                        <v-img
+                          :aspect-ratio="16/9"
+                          src="https://cdn.pixabay.com/photo/2017/03/08/14/20/flat-2126884__340.png"
+                          contain>
+                      
+                        <v-expand-transition>
+                          <div
+                            v-if="hover"
+                            class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal text-h2 white--text"
+                            style="height: 100%;"
+                          >
+                            {{law.law}}
                           </div>
-                          <div v-else>
-                            <v-icon color="gray">mdi-star-outline</v-icon>
-                          </div>   
-                    </v-btn>
-                    <div class="font-weight-light grey--text text-h6">
-                      {{law.nro_law}}
-                    </div>
-                    <h3 class="text-h6 font-weight-light orange--text">
-                      {{law.name | truncate(30)}}
-                    </h3>
-                    <div class="font-weight-light text-h7 text-justify">
-                      {{law.description | truncate(80)}}
-                    </div>
-                  </v-card-text>
-                </v-card>
-              </v-hover>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-card-text v-else>
+                        </v-expand-transition>
+                      </v-img>
+                      </nuxt-link>
+                      <v-card-text
+                        class="pt-4 textContainer"
+                        style="position: relative;"
+                      >
+                        <v-btn fab absolute right top @click="toggleFavorite(law)" title="favoritar">
+                              <div v-if="$auth.loggedIn">
+                                <v-icon v-if="law.favSelect" color="yellow darken-3">mdi-star</v-icon>
+                                <v-icon v-else color="gray">mdi-star-outline</v-icon>
+                              </div>
+                              <div v-else>
+                                <v-icon color="gray">mdi-star-outline</v-icon>
+                              </div>   
+                        </v-btn>
+                        <nuxt-link class="linkSecond" :to="{
+                        name: 'leges',
+                        params:{leges: law.name},
+                        query:{id:law.id}  
+                      }">
+                          <div class="font-weight-light grey--text text-h6">
+                            {{law.nro_law}}
+                          </div>
+                          <h3 class="text-h6 font-weight-light orange--text">
+                            {{law.name | truncate(30)}}
+                          </h3>
+                          <div class="font-weight-light text-h7 text-justify textDescription">
+                            {{law.description | truncate(80)}}
+                          </div>
+                        </nuxt-link>
+                      </v-card-text>
+                    </v-card>
+                  </v-hover>
+                </v-col>
+              </v-row>
+            </v-card-text>
+            <v-card-text v-else>
           <v-subheader>Resultado: <span v-if="searchLawFiltred.length > 1">&nbsp;{{searchLawFiltred.length}} normas encontradas</span> <span v-else>&nbsp;nenhuma norma encontrada</span> </v-subheader>
             <v-card class="mb-2" v-for="lei in searchLawFiltred" :key="lei.id" hover
               :to="{
@@ -234,5 +240,11 @@ export default {
 }
 .textContainer{
   background-color: rgba(228, 228, 238, 0.5);
+}
+.linkSecond{
+  text-decoration: none;
+}
+.textDescription{
+  color: rgb(75, 75, 78);
 }
 </style>

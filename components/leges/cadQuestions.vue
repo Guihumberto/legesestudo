@@ -39,6 +39,13 @@
                               dense
                             ></v-select>
                           </v-col>
+                          <v-col cols="">
+                            <v-btn-toggle>
+                              <v-btn @click="insertAsk()" icon><v-icon>mdi-card-text</v-icon></v-btn>
+                              <v-btn @click="tabText()" icon> <v-icon>mdi-keyboard-space</v-icon></v-btn>
+                              <v-btn @click="clearTextQuestion()" icon> <v-icon>mdi-cached</v-icon></v-btn>
+                            </v-btn-toggle>
+                          </v-col>
                           <v-col cols="12">
                               <v-textarea
                               label="Texto da Questão"
@@ -116,6 +123,7 @@
         },
         rules: { required: (value) => !!value || "Este campo é obrigatório"}, 
         selectedItem: 1,
+        askPattern: "Julgue a assertiva abaixo:"
       }
     },
     props:{
@@ -161,6 +169,15 @@
       },
       editQuestion(){
         console.log("editar questao")
+      },
+      insertAsk(){
+        this.questions.textQuestion += this.askPattern
+      },
+      clearTextQuestion(){
+        this.questions.textQuestion = ''
+      },
+      tabText(){
+        this.questions.textQuestion += "<br><br>"
       }
     },
     async fetch(){
