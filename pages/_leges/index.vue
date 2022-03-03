@@ -32,7 +32,11 @@
               <div :class="text.structura ? 'structura':'none'">
                 <div :style="revoked(text.text)" :id="text.id">
                   <p :class="{textLaw: pagination.familyFont }" :style="{ fontSize: pagination.fontSizeProp + 'px'}" v-if="!text.revogado" :title="`art ${text.art}º`">
-                    <v-badge v-show="text.questions.length > 0 || text.comments.length > 0" color="success" bordered left :content="text.questions.length" overlap>
+                    <v-badge v-show="text.questions.length > 0 || text.comments.length > 0" 
+                      :color="text.questions.length ? 'success' : 'warning'" 
+                      bordered left :content="text.questions.length || 'C'" 
+                      :title="text.questions.length ? 'Questões' : 'Comentários'"
+                      overlap>
                     <v-btn x-small @click="text.show = !text.show" fab icon> <v-icon>mdi-message-reply-text</v-icon></v-btn></v-badge> <span v-html="text.text"> </span> 
                     <v-avatar height="14" width="1" v-show="hover" v-if="$auth.loggedIn" >
                       <v-btn @click="toggleTextLawFavorite(text)" icon>
