@@ -119,6 +119,7 @@
           this.$emit('artPerpage', this.dispositiveScreen)
         },
         seletcArt(){
+          this.search = ''
           this.$emit('seletcArt', this.art)
         }
     }

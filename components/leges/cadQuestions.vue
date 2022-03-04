@@ -42,6 +42,7 @@
                           <v-col cols="">
                             <v-btn-toggle>
                               <v-btn @click="insertAsk()" icon><v-icon>mdi-card-text</v-icon></v-btn>
+                              <v-btn @click="insertTrueOrFalse()" icon><v-icon>mdi-ab-testing</v-icon></v-btn>
                               <v-btn @click="tabText()" icon> <v-icon>mdi-keyboard-space</v-icon></v-btn>
                               <v-btn @click="clearTextQuestion()" icon> <v-icon>mdi-cached</v-icon></v-btn>
                             </v-btn-toggle>
@@ -123,7 +124,8 @@
         },
         rules: { required: (value) => !!value || "Este campo é obrigatório"}, 
         selectedItem: 1,
-        askPattern: "Julgue a assertiva abaixo:"
+        askPattern: "Julgue a assertiva abaixo:",
+        askPatternTrueOrFalse: "Verdadeiro ou Falso"
       }
     },
     props:{
@@ -173,12 +175,15 @@
       insertAsk(){
         this.questions.textQuestion += this.askPattern
       },
+      insertTrueOrFalse(){
+        this.questions.textQuestion += this.askPatternTrueOrFalse
+      },
       clearTextQuestion(){
         this.questions.textQuestion = ''
       },
       tabText(){
         this.questions.textQuestion += "<br><br>"
-      }
+      },
     },
     async fetch(){
       const client = this.$apollo.getClient()

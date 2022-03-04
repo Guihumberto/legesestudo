@@ -376,6 +376,7 @@ export default {
       : "color: black"
     },
     testArt(index){
+      this.findDispositive = ''
       this.art = parseInt(index)
     },
     topPage(i){
