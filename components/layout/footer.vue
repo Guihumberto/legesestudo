@@ -33,7 +33,7 @@
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — SEFAZ SEARCH<br>
+        {{ new Date().getFullYear() }} — ESTUDO DA LEI<br>
         <v-btn x-small icon to="/about">João Humberto Silva Ribeiro Júnior</v-btn>
       </v-card-text>
     </v-card>

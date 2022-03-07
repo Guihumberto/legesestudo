@@ -6,21 +6,24 @@
       @artPerpage="dispositiveScreen = $event" @seletcArt="testArt($event)" :dispositiveScreen="dispositiveScreen" />
       <v-card width="980" flat class="mx-auto">
          <v-card-title>
+          <v-btn title="Add Favoritos" icon large @click="toggleFavorite" v-if="$auth.loggedIn">
+              <v-icon large :color="lawIsLiked? 'yellow darken-3':'grey lighten-1'" >mdi-star</v-icon>
+            </v-btn>
+            <v-btn @click="error" icon large v-else title="Login necessário!">
+              <v-icon large color="grey lighten-1" >mdi-star</v-icon>
+          </v-btn>
           <leges-filter :filter="filterFavMenu" @filtersFav="favoritesTextLaw = $event" @filtersQc="filterFavMenu.withQuestions = $event" />
           <v-spacer></v-spacer>
           <leges-structura @seletcArt="testArt($event)" :law="idLaw" />
           <leges-anexos v-show="false" />
-          <leges-options :filterMenu="filterFavMenu" />
+          <leges-options />
         </v-card-title>
+        <v-card-text v-show="filterFavMenu.withQuestions">
+          <leges-filterPainel />
+        </v-card-text>
       </v-card>
+
       <leges-titleLaw :infolaw="infolaw" />
-  
-      <v-btn title="Add Favoritos" icon large @click="toggleFavorite" v-if="$auth.loggedIn">
-        <v-icon large :color="lawIsLiked? 'yellow darken-3':'grey lighten-1'" >mdi-star</v-icon>
-      </v-btn>
-      <v-btn @click="error" icon large v-else title="Login necessário!">
-        <v-icon large color="grey lighten-1" >mdi-star</v-icon>
-      </v-btn>
 
       <div v-show="!art && !filterFavMenu.isFilter && !filterFavMenu.withQuestions">
         <leges-pagination v-show="!findDispositive" :dispositiveScreen="dispositiveScreen" :pagination="pagination" :pageTot="totalCount"/>

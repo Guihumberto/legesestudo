@@ -1,0 +1,11 @@
+query($id:ID!){
+  lawtexts(sort: "art:asc", where:{law:{id:$id}, questions:{id_null:false}}){
+    art
+    law{
+      id
+    }
+    questions{
+      id
+    }
+  }
+}

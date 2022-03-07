@@ -40,7 +40,7 @@
             outlined
             label="Disp. por pág"
             v-model="dispositiveScreen"
-            :items="[10, 20, 30, 40, 50]"
+            :items="[10, 20, 30, 40, 50, 100]"
             @input="artPerPage"
           ></v-select>
         </v-col>

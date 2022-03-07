@@ -18,11 +18,11 @@
           <span>Opçoes de estudo</span>
         </v-tooltip>
       </template>
-      <v-card>
-        <v-card-text>
- 
-        </v-card-text>
-      </v-card>
+     <v-list>
+       <v-list-item>
+         <leges-upLevel-estatistics />
+       </v-list-item>
+     </v-list>
     </v-menu>
   </div>
 </template>
