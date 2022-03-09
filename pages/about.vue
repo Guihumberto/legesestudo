@@ -66,6 +66,15 @@
 
 <script>
 export default {
+    head(){
+        return {
+            title: 'João Humberto Silva Ribeiro Júnior',
+            meta: [
+                { hid: 'description', name: 'description', content: 'Idealizador e Desenvolvedor do Estudo da Lei - Leges' },
+            ],
+            bodyAttrs:{ class: 'bg-gray-400'}
+        }
+    },
     data(){
         return{
             aprovs:[

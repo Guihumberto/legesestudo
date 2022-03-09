@@ -109,6 +109,14 @@
 <script>
 export default {
   middleware:"initData",
+  head(){
+        return {
+            title: 'Estudo da Lei - Leges',
+            meta: [
+                { hid: 'description', name: 'description', content: 'Direito Tributário e muito mais no Estudo da Lei - Leges' },
+            ],
+        }
+    },
   data(){
     return{
       findLaw: "",

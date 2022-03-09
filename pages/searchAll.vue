@@ -84,6 +84,14 @@
   import gql from "graphql-tag";
 
   export default {
+      head(){
+        return {
+            title: 'Busca Estudo da Lei - Leges',
+            meta: [
+                { hid: 'description', name: 'description', content: 'Busca Direito Tributário e muito mais no Estudo da Lei - Leges' },
+            ],
+        }
+    },
       data(){
           return{
             search: "",

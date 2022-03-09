@@ -47,6 +47,14 @@
 
 <script>
 export default {
+    head(){
+        return {
+            title: 'Blog Estudo da Lei - Leges',
+            meta: [
+                { hid: 'description', name: 'description', content: 'Direito Tributário e muito mais no Estudo da Lei - Leges' },
+            ],
+        }
+    },
     data(){
         return{
         }
